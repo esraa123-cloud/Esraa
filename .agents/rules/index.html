@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Lumina Shop - Home (Bootstrap 5)</title>
+<!-- Bootstrap 5 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<!-- Google Fonts & Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=Manrope:wght@600;700&amp;display=swap" rel="stylesheet"/>
+
+<style>
+    body {
+        font-family: 'Inter', sans-serif;
+        padding-top: 64px;
+    }
+    h1, h2, h3, .navbar-brand {
+        font-family: 'Manrope', sans-serif;
+    }
+    .hero-header {
+        min-height: 600px;
+        height: 80vh;
+        background-color: #091426;
+    }
+    .hero-overlay {
+        background: linear-gradient(90deg, rgba(9, 20, 38, 0.85) 0%, rgba(9, 20, 38, 0.2) 100%);
+    }
+    .product-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .product-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.08) !important;
+    }
+    .product-card img {
+        transition: transform 0.5s ease;
+    }
+    .product-card:hover img {
+        transform: scale(1.04);
+    }
+    .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+</style>
+</head>
+<body class="bg-light text-dark overflow-x-hidden">
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top border-bottom border-secondary">
+    <div class="container py-1">
+        <!-- Brand -->
+        <a class="navbar-brand fw-bold fs-4 text-white" href="index.html">
+            Lumina Shop
+        </a>
+
+        <!-- Mobile Toggler -->
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navContent" aria-controls="navContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="material-symbols-outlined text-white">menu</span>
+        </button>
+
+        <!-- Navbar Links & Actions -->
+        <div class="collapse navbar-collapse" id="navContent">
+            <ul class="navbar-nav mx-auto mb-2 mb-md-0 gap-md-3">
+                <li class="nav-item">
+                    <a class="nav-link text-white-50 active text-white" href="#">New Arrivals</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white-50" href="#">Best Sellers</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white-50" href="#">Categories</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white-50" href="#">Sale</a>
+                </li>
+            </ul>
+
+            <div class="d-flex align-items-center gap-3">
+                <button aria-label="Search" class="btn btn-link text-white-50 p-0 text-decoration-none">
+                    <span class="material-symbols-outlined">search</span>
+                </button>
+                <button aria-label="Cart" class="btn btn-link text-white-50 p-0 text-decoration-none">
+                    <span class="material-symbols-outlined">shopping_cart</span>
+                </button>
+                <button aria-label="Account" class="btn btn-link text-white-50 p-0 text-decoration-none">
+                    <span class="material-symbols-outlined">account_circle</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<header class="hero-header position-relative d-flex align-items-center overflow-hidden">
+    <div class="position-absolute top-0 start-0 w-100 h-100">
+        <img alt="Hero Lifestyle Image" class="w-100 h-100 object-fit-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAnOtfl3dtns4GeXHrNl6pk8Oqmbx84Hk4_h3vc34K5NqjEB3TVIxc_3B5YNJN8QpJNTqSNOD14DGRk0wzoGSYYrljd7BsNLJltXiasGBmF0QTJ2b8Jud5GI888CsbgP6isboBHTiuurcv3PCtJj_XIUO35cecVtLX8yEzlJRQ3o6-BUfwoMQv7kQREm7DDxHb47OqqhCcSlLFMusIIcDgmpDNvw_R-xgcX3txu8SPEV2UlQ-9uOfRTxA"/>
+    </div>
+    <div class="position-absolute top-0 start-0 w-100 h-100 hero-overlay"></div>
+    <div class="container position-relative z-1 text-white py-5">
+        <div class="col-lg-7 col-xl-6">
+            <span class="text-uppercase tracking-wider fw-semibold small text-white-50 mb-3 d-block">Spring Collection 2024</span>
+            <h1 class="display-4 fw-bold mb-4">Elevate Your Everyday Essentials</h1>
+            <p class="lead mb-4 text-white-50">Discover thoughtfully designed pieces crafted for modern living. Uncompromising quality meets timeless minimalism.</p>
+            <a class="btn btn-light btn-lg px-4 py-3 fw-semibold text-dark shadow-sm" href="#">
+                Explore Collection
+            </a>
+        </div>
+    </div>
+</header>
+
+<!-- Main Content -->
+<main class="container py-5 my-4">
+    <!-- New Arrivals Section -->
+    <section class="mb-5 pb-4">
+        <div class="d-flex justify-content-between align-items-end mb-4">
+            <div>
+                <h2 class="fw-bold h2 mb-1">New Arrivals</h2>
+                <p class="text-muted mb-0">The latest additions to our curated selection.</p>
+            </div>
+            <a class="text-dark fw-semibold text-decoration-none d-none d-md-inline-flex align-items-center" href="#">
+                Shop All New <span class="material-symbols-outlined ms-1">arrow_forward</span>
+            </a>
+        </div>
+
+        <div class="row g-4">
+            <!-- Featured Item (Col 6 on large screens) -->
+            <div class="col-12 col-lg-6">
+                <a href="htn.html" class="card product-card h-100 border-0 rounded-3 text-decoration-none overflow-hidden position-relative">
+                    <div class="ratio ratio-4x3 h-100 overflow-hidden">
+                        <img alt="Featured Product" class="object-fit-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPhcgG6QA5RsOA7DJTMWIl4HQwzagvXE-cqKZNzk3lVmtkmpB_98DMBBrOgzaUIgtjvu4OjxaSpnX49Zfu4zPSuaDxvFMgAgzvjKX6eiTKBjRWU-3peTe0cZe-frxesl27Sci2J_JsfzP_txAQfCkk28AkyxSXeTmgGCfigw7SvQH3vAqK5Kr5Ay8zSCXNDnmDwQoL24vmKdYBqfVwbdLPdcWys1trBo06w07KpY26yT7A8vlril8YAg"/>
+                    </div>
+                    <div class="card-img-overlay d-flex flex-column justify-content-end p-4 text-white" style="background: linear-gradient(0deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 60%);">
+                        <div>
+                            <span class="badge bg-warning text-dark mb-2">New</span>
+                            <h3 class="card-title h4 fw-semibold mb-1 text-white">Sculptural Ceramic Vase</h3>
+                            <p class="card-text fw-normal text-white-50 mb-0">$145.00</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Standard Items Grid (Col 3 on large screens) -->
+            <div class="col-12 col-lg-6">
+                <div class="row g-4">
+                    <!-- Product 1 -->
+                    <div class="col-6">
+                        <div class="card product-card h-100 border-0 shadow-sm rounded-3 overflow-hidden">
+                            <div class="ratio ratio-1x1 overflow-hidden bg-secondary-subtle">
+                                <img alt="Product" class="object-fit-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNrTmt19C2sGFdcdMYAqRxLMcXC4kSDDxgSsdvlh7MqqxNwkjjTx72AeQKkHmYHHIPvseAPx9G_LsgV3b5Y_3xKRipmfcvmBrinYZGkXEi4oBo-Q4MnM_n2g9oIFQuUGN0XZU9R0gJ2p9Tf-hZYkEatcHd489PRx7dA1wh1JZl6DrVYwxxnSWgyZbA-G5yH-CefQrO2G9h1ai-MEgMSW6HP6-FLHb-3g6YDAdh4wsYcxvQtdXgSjoamg"/>
+                            </div>
+                            <div class="card-body p-3">
+                                <h3 class="card-title h6 fw-semibold text-truncate mb-1">Minimalist Table Lamp</h3>
+                                <p class="card-text text-muted small mb-0">$220.00</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 2 -->
+                    <div class="col-6">
+                        <div class="card product-card h-100 border-0 shadow-sm rounded-3 overflow-hidden">
+                            <div class="ratio ratio-1x1 overflow-hidden bg-secondary-subtle">
+                                <img alt="Product" class="object-fit-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBp89LYJvGtBPmkSOVkXrNgz0XnhQOK9pavBk_Cqjlhuqw59jp9mAuptAek_QpiXV-teGtPR1eMQU8Iwt_1NrIshUaFgVCWLb1L4vjWtBuKh4Bf6XXzZOlK2CVklWsIjuqkAhVcd19F4TbADSrSOPMqs28oMT_vWaas5VxOVPKqEGYggnBrTpzhvx1cQVbTBHR5v7GgsOl44lO4a2Tbf0rSLtQA_DhyF8g4fwyXdgMIgNAdJq_E4tZhEA"/>
+                            </div>
+                            <div class="card-body p-3">
+                                <h3 class="card-title h6 fw-semibold text-truncate mb-1">Linen Throw Blanket</h3>
+                                <p class="card-text text-muted small mb-0">$95.00</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 3 -->
+                    <div class="col-6">
+                        <div class="card product-card h-100 border-0 shadow-sm rounded-3 overflow-hidden">
+                            <div class="ratio ratio-1x1 overflow-hidden bg-secondary-subtle">
+                                <img alt="Product" class="object-fit-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCopEy6ux5qf7dVQp9uz9YuwZyhf9rIQrvzsfEkN3xve9PzuICNc_usAqwEDbfRFmCttthxv-CJuhCDoA2d6TFNeUKWmKfux6-q0IUbQv8LcGmSD0ZHbpJKCPAftV3tHI-q5VBLzBo0xRjin1nF400IcdW4AZa-wIB3sfdvDxfhR7UjVAb0b3OZ8Es7AyDWaYilfvzrtEUcWvbwdSRqnzo-EYKrbBYZ45AiTyf-3sh1Voci9Lk6CozZBQ"/>
+                            </div>
+                            <div class="card-body p-3">
+                                <h3 class="card-title h6 fw-semibold text-truncate mb-1">Matte Black Mug Set</h3>
+                                <p class="card-text text-muted small mb-0">$48.00</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 4 -->
+                    <div class="col-6">
+                        <div class="card product-card h-100 border-0 shadow-sm rounded-3 overflow-hidden">
+                            <div class="ratio ratio-1x1 overflow-hidden bg-secondary-subtle">
+                                <img alt="Product" class="object-fit-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuTFfhlgBz95d3H0ndFYJH4_JZUosoOwQYM1iYD3CjjTzjpNf4jOdL6mxDw79ieYRck3L-l_Yj1TsXJBqRCzpSkz7LMkXB2a6yso1dRRzpucDfu_3SKZjdPnl_IxVqtx_WUy2_WFIgoy3Pkl3ZxfVJxT2P4uWzqI-xwFb0Dx8sG492ivJe83S2bsoK71GxLQIYi_VUeBJNn4z4E8GOgg-trjXKhW5tiSFsR5Prz2mSPLxjn6yhqFEVtg"/>
+                            </div>
+                            <div class="card-body p-3">
+                                <h3 class="card-title h6 fw-semibold text-truncate mb-1">Aura Smart Diffuser</h3>
+                                <p class="card-text text-muted small mb-0">$185.00</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Curated Spaces Section -->
+    <section class="py-4">
+        <div class="row align-items-center g-4 g-lg-5">
+            <div class="col-lg-5">
+                <h2 class="fw-bold h2 mb-3">Curated Spaces</h2>
+                <p class="text-muted lead fs-6 mb-4">Design your environment with intention. Our collections are grouped by mood and utility to help you build a cohesive aesthetic throughout your home.</p>
+
+                <div class="list-group gap-2 border-0">
+                    <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center border rounded-3 p-3">
+                        <span class="fw-semibold">Living Room Essentials</span>
+                        <span class="material-symbols-outlined text-muted">chevron_right</span>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center border rounded-3 p-3">
+                        <span class="fw-semibold">The Home Office</span>
+                        <span class="material-symbols-outlined text-muted">chevron_right</span>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center border rounded-3 p-3">
+                        <span class="fw-semibold">Bedroom Sanctuary</span>
+                        <span class="material-symbols-outlined text-muted">chevron_right</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-lg-7">
+                <div class="row g-3">
+                    <div class="col-6">
+                        <div class="ratio ratio-4x5 rounded-3 overflow-hidden shadow-sm">
+                            <img alt="Home Office" class="object-fit-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyQTiCdD7lAxAP60DbZanoF6nnhG5pz5fj1uBusLg6rU8T8kbwFNcTjKxn_l68tWILkz5N2HmBQx_Cp80NjEVadH0NhA0d1yfkMkxlhMvWFSqLTiZcfIm0G7VoZrKVNzPI26SWkdEy7mYpXg3S7aZWEQSfdvHtpVdPJaGHyINNDyL94YoDs5GojTB2fcjppEXQRXPxvGywBSEdZeTR04GlfGVbz-0nupFXBzato-SU73SUHqZ1v9hdPg"/>
+                        </div>
+                    </div>
+                    <div class="col-6 pt-4">
+                        <div class="ratio ratio-4x5 rounded-3 overflow-hidden shadow-sm">
+                            <img alt="Bedroom Sanctuary" class="object-fit-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSrzaMtOAw1CM5vVGY7zXfSzq1TIE4aAb4U-N4aJMz_LPonF4eBHrrA_VwfAUQ-CuD5O44h5yTsbcb1WYTXZHu7F-H72M2qb9boa7gSV49_vVWWfKUFY12-VWaqbm2Rv2cX87MWCQErsJyLZXWCHzIGLmzxxwy-sSnfh0Nnxsdx2H6EFZfEyT_IIFMsSWify1Z5C_XWhVEM8hYRt4etzjE1vbah67FIvlBBqjEjXctDZmREijeKbNsqg"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Footer -->
+<footer class="bg-white py-5 border-top text-muted mt-5">
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
+        <a class="navbar-brand fw-bold fs-4 text-dark" href="#">
+            Lumina Shop
+        </a>
+        <ul class="nav justify-content-center gap-3">
+            <li class="nav-item"><a class="nav-link text-muted p-0 small" href="#">Privacy Policy</a></li>
+            <li class="nav-item"><a class="nav-link text-muted p-0 small" href="#">Terms of Service</a></li>
+            <li class="nav-item"><a class="nav-link text-muted p-0 small" href="#">Shipping Info</a></li>
+            <li class="nav-item"><a class="nav-link text-muted p-0 small" href="#">Contact Us</a></li>
+        </ul>
+        <div class="small">
+            © 2024 Lumina Shop. All rights reserved.
+        </div>
+    </div>
+</footer>
+
+<!-- Bootstrap 5 JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

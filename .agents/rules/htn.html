@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Lumina Shop - Product Details</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=Manrope:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "outline-variant": "#c5c6cd",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary-fixed": "#191c1e",
+                    "on-secondary-fixed-variant": "#444749",
+                    "on-error": "#ffffff",
+                    "surface-container-highest": "#d3e4fe",
+                    "on-secondary": "#ffffff",
+                    "surface-tint": "#545f73",
+                    "inverse-on-surface": "#eaf1ff",
+                    "on-error-container": "#93000a",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "on-background": "#0b1c30",
+                    "primary-container": "#1e293b",
+                    "primary-fixed": "#d8e3fb",
+                    "on-surface-variant": "#45474c",
+                    "on-primary-fixed": "#111c2d",
+                    "tertiary": "#201100",
+                    "on-primary": "#ffffff",
+                    "on-tertiary-container": "#c88000",
+                    "surface-container-low": "#eff4ff",
+                    "surface-bright": "#f8f9ff",
+                    "error-container": "#ffdad6",
+                    "inverse-surface": "#213145",
+                    "inverse-primary": "#bcc7de",
+                    "surface": "#f8f9ff",
+                    "tertiary-container": "#3c2300",
+                    "secondary-fixed-dim": "#c4c7c9",
+                    "on-primary-fixed-variant": "#3c475a",
+                    "on-secondary-container": "#626567",
+                    "outline": "#75777d",
+                    "secondary-fixed": "#e0e3e5",
+                    "primary-fixed-dim": "#bcc7de",
+                    "surface-container": "#e5eeff",
+                    "on-tertiary-fixed": "#2a1700",
+                    "surface-dim": "#cbdbf5",
+                    "surface-variant": "#d3e4fe",
+                    "surface-container-high": "#dce9ff",
+                    "secondary-container": "#e0e3e5",
+                    "on-primary-container": "#8590a6",
+                    "tertiary-fixed": "#ffddb8",
+                    "secondary": "#5c5f61",
+                    "on-surface": "#0b1c30",
+                    "on-tertiary": "#ffffff",
+                    "primary": "#091426",
+                    "error": "#ba1a1a",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "background": "#f8f9ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "container-max": "1280px",
+                    "gutter": "24px",
+                    "margin-mobile": "20px",
+                    "margin-desktop": "64px",
+                    "base": "8px"
+            },
+            "fontFamily": {
+                    "body-lg": [
+                            "Inter"
+                    ],
+                    "headline-md": [
+                            "Manrope"
+                    ],
+                    "display-lg-mobile": [
+                            "Manrope"
+                    ],
+                    "display-lg": [
+                            "Manrope"
+                    ],
+                    "body-md": [
+                            "Inter"
+                    ],
+                    "label-sm": [
+                            "Inter"
+                    ]
+            },
+            "fontSize": {
+                    "body-lg": [
+                            "18px",
+                            {
+                                    "lineHeight": "28px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "headline-md": [
+                            "24px",
+                            {
+                                    "lineHeight": "32px",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "display-lg-mobile": [
+                            "32px",
+                            {
+                                    "lineHeight": "40px",
+                                    "letterSpacing": "-0.01em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "display-lg": [
+                            "48px",
+                            {
+                                    "lineHeight": "56px",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "body-md": [
+                            "16px",
+                            {
+                                    "lineHeight": "24px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "label-sm": [
+                            "14px",
+                            {
+                                    "lineHeight": "20px",
+                                    "letterSpacing": "0.05em",
+                                    "fontWeight": "600"
+                            }
+                    ]
+            }
+        },
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md antialiased pt-16">
+<!-- TopNavBar -->
+<nav class="bg-surface dark:bg-primary fixed top-0 w-full z-50">
+<div class="border-b border-outline-variant dark:border-on-primary-fixed-variant">
+<div class="flex justify-between items-center h-16 max-w-container-max mx-auto px-margin-desktop md:px-margin-desktop px-margin-mobile">
+<a href="index.html" class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">
+                    Lumina Shop
+</a>
+<div class="hidden md:flex space-x-6">
+<a class="text-on-surface-variant dark:text-on-primary-container font-body-md text-body-md hover:text-primary dark:hover:text-primary-fixed transition-colors cursor-pointer active:opacity-70" href="index.html">New Arrivals</a>
+<a class="text-on-surface-variant dark:text-on-primary-container font-body-md text-body-md hover:text-primary dark:hover:text-primary-fixed transition-colors cursor-pointer active:opacity-70" href="index.html">Best Sellers</a>
+<a class="text-on-surface-variant dark:text-on-primary-container font-body-md text-body-md hover:text-primary dark:hover:text-primary-fixed transition-colors cursor-pointer active:opacity-70" href="index.html">Categories</a>
+<a class="text-on-surface-variant dark:text-on-primary-container font-body-md text-body-md hover:text-primary dark:hover:text-primary-fixed transition-colors cursor-pointer active:opacity-70" href="index.html">Sale</a>
+</div>
+<div class="flex space-x-4">
+<button class="text-primary dark:text-primary-fixed cursor-pointer active:opacity-70 hover:text-primary dark:hover:text-primary-fixed transition-colors">
+<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+</button>
+<button class="text-primary dark:text-primary-fixed cursor-pointer active:opacity-70 hover:text-primary dark:hover:text-primary-fixed transition-colors">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-12 md:py-20">
+<!-- Product Section -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter mb-24">
+<!-- Gallery (Left) -->
+<div class="lg:col-span-7 flex flex-col md:flex-row gap-4">
+<!-- Thumbnails -->
+<div class="hidden md:flex flex-col gap-4 w-24">
+<img class="w-24 h-32 object-cover rounded border border-outline-variant cursor-pointer hover:border-primary transition-colors" data-alt="A minimalist close-up shot of a sleek, modern ceramic vase in a studio setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqCKByIWacrnI52cLdWZIjssN8XLM6ZF3ukXalEEVLheJxprEH4jFNRqFOwQCmqN7-YT40CJZheDUwUA-hmBK2fL7zKEyH8tFm6Uez1ZqXg4GCAD7JogLbJ8OM-pi0Np9MCU74gnQK-hhgmJmVuuVW-uzOZgOo8vLedh0g25qEF-YjkVtdXTz9q-hXGUahi0T2vm8Vjr6b-NMcTsNDw6VSloxcL4YXnPgdcIdNEZY8n6w36sY5qh4wyA"/>
+<img class="w-24 h-32 object-cover rounded border border-surface-container-high cursor-pointer hover:border-primary transition-colors" data-alt="A top-down view of a minimalist white ceramic vase sitting on a light gray concrete surface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwoFWJPR8zZSrXSlOLwMJzy4vp2RVZ2MhDgJPH6wZp34nrhvHx09L1R9vhpPvW6rEJ0_qTkhUvIFEIIZmrQnmLVVlo9A0i1Dg5adbP2POdIsTICgnd1o4EMn7cTEftCI9Yw5nhlCmFGLD1DA73d5PYtZj4vSkmGcTG8lswDz3qBsg3UXWZpNBvWb7jii2OPA9ZY91bvTjc5hCAbLATBrFq-9Umhxd0wLR5yq7Lep8_VYr6MSSWC29Cdw"/>
+<img class="w-24 h-32 object-cover rounded border border-surface-container-high cursor-pointer hover:border-primary transition-colors" data-alt="A lifestyle shot of a modern white ceramic vase placed on a sleek wooden shelf in a minimalist living room." src="https://lh3.googleusercontent.com/aida-public/AB6AXuChX6K_HWuHdvb1cXO2oMrdMIQYW8a783-1G_fsoWp8Ph0hNPb5UMYaxbIHNeYjLkaUsfWwj5k3UBh2uw4UVfyzicwtPQiLPPpGh4rPN5uBQMk4RCSJ_Y2XFiUgXz6GFl98aXrm_Sq286Umsr_tBslGvm4wwePH7HkT_zAkxBSkLHORBDSQsCUZWafYMQi34pOlzyOiPvXMVYXW5odIV2ZSy1278qT3j4JMVmmAhnbMGdfZ657Yuosg7w"/>
+</div>
+<!-- Main Image -->
+<div class="flex-1 bg-surface-container-lowest rounded-lg border border-outline-variant overflow-hidden relative group">
+<img class="w-full h-full object-cover min-h-[500px]" data-alt="A large, striking hero shot of a minimalist white ceramic vase on a white pedestal." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnwpBkTwz4RdGU2twiQiFE-6mzvXHPpMsSkamcQpsY----qJMbsabLVA4_76-8LB1l8XrPGGKm15P1BaZBCaKE0UhKuwB7bugy3QdRe693Yd06L7rFYt-XSHDmcdFB6f2DkQWuR5zfjURynB_071weUvL8CuQwctfPiSqtTLs_yr975Dg_vqJ5M0eIj-if4jq5juFBDMAr7oK65u0pB44L-4Fhf9UJQ9jkOalxQ7OcjKBheBgdW-xyYw"/>
+</div>
+</div>
+<!-- Product Info (Right) -->
+<div class="lg:col-span-5 flex flex-col pt-4 lg:pt-0 pl-0 lg:pl-8">
+<div class="mb-6">
+<h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-2">Aura Ceramic Vase</h1>
+<p class="font-headline-md text-headline-md text-on-surface mb-4">$145.00</p>
+<div class="flex items-center gap-1 mb-4">
+<span class="material-symbols-outlined text-tertiary-fixed-dim" data-icon="star" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-tertiary-fixed-dim" data-icon="star" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-tertiary-fixed-dim" data-icon="star" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-tertiary-fixed-dim" data-icon="star" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-surface-container-high" data-icon="star">star</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant ml-2">(128 Reviews)</span>
+</div>
+</div>
+<div class="prose max-w-none text-body-md font-body-md text-on-surface-variant mb-8">
+<p>Elevate your space with the Aura Ceramic Vase. Crafted with a matte finish and smooth, organic curves, this minimalist piece seamlessly integrates into any modern interior. Designed to stand alone as a sculptural object or to perfectly display minimalist floral arrangements.</p>
+</div>
+<!-- Selectors -->
+<div class="mb-8 space-y-6">
+<!-- Color -->
+<div>
+<h3 class="font-label-sm text-label-sm text-on-surface mb-3">Color: <span class="font-normal text-on-surface-variant">Matte White</span></h3>
+<div class="flex gap-3">
+<button aria-label="White" class="w-10 h-10 rounded-full border-2 border-primary bg-[#F5F5F5] ring-2 ring-transparent focus:outline-none"></button>
+<button aria-label="Charcoal" class="w-10 h-10 rounded-full border border-outline-variant bg-[#2A2A2A] hover:border-primary transition-colors focus:outline-none"></button>
+<button aria-label="Sand" class="w-10 h-10 rounded-full border border-outline-variant bg-[#D2B48C] hover:border-primary transition-colors focus:outline-none"></button>
+</div>
+</div>
+<!-- Quantity -->
+<div>
+<h3 class="font-label-sm text-label-sm text-on-surface mb-3">Quantity</h3>
+<div class="flex items-center border border-outline-variant rounded w-32 h-12">
+<button class="flex-1 flex justify-center items-center text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="remove">remove</span>
+</button>
+<span class="flex-1 text-center font-body-md text-body-md text-on-surface">1</span>
+<button class="flex-1 flex justify-center items-center text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex flex-col gap-4 mt-auto">
+<button class="w-full h-14 bg-primary text-on-primary font-label-sm text-label-sm rounded-lg hover:bg-primary-container transition-colors flex items-center justify-center gap-2">
+                        Add to Cart
+                    </button>
+<button class="w-full h-14 bg-transparent text-primary border border-outline-variant font-label-sm text-label-sm rounded-lg hover:border-primary transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined" data-icon="favorite_border">favorite_border</span>
+                        Save to Wishlist
+                    </button>
+</div>
+<!-- Trust Badges -->
+<div class="mt-8 pt-8 border-t border-surface-container-high grid grid-cols-2 gap-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="local_shipping">local_shipping</span>
+<span class="font-body-md text-sm text-on-surface-variant">Free Shipping over $100</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="replay">replay</span>
+<span class="font-body-md text-sm text-on-surface-variant">30-Day Returns</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Related Products Section -->
+<div class="mb-24">
+<h2 class="font-headline-md text-headline-md text-primary mb-8">Complete the Look</h2>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+<!-- Product Card 1 -->
+<div class="group border border-surface-container-high rounded-lg overflow-hidden hover:shadow-[0px_10px_30px_rgba(0,0,0,0.04)] transition-shadow">
+<div class="aspect-[4/5] bg-surface-container-lowest overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A minimalist modern table lamp featuring a brass stem and a dome-shaped white shade." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAn8WoOhp-V1K-fvm5Xq0JEqciQUp4VfOfOAWhDaDZfWHW04z2d4XTkD---3C6IeHq1fykR7uc6xyvpHdm3A5ouwYmgALSqdQ4IWNcrl_Yc-u69XszGO47vKGA3BhViky7bndVv_EjUTy6keMH9LXl8P2RhCoaZIXrXizBq5dB-uG83uUzfAZJE6FmPQI3dHuUgL6kfaoqnhH1Z7AJ5adpjisH6ccZfKxPqN7lXeuZXfpGtEyckeeHwZA"/>
+</div>
+<div class="p-4">
+<h3 class="font-body-md text-body-md text-primary mb-1">Nova Desk Lamp</h3>
+<p class="font-body-md text-body-md font-bold text-on-surface">$210.00</p>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="group border border-surface-container-high rounded-lg overflow-hidden hover:shadow-[0px_10px_30px_rgba(0,0,0,0.04)] transition-shadow">
+<div class="aspect-[4/5] bg-surface-container-lowest overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A high-angle shot of a minimalist matte black ceramic tray." src="https://lh3.googleusercontent.com/aida-public/AB6AXuATRDk4LEoUarZYV8sb_trHt27oRStkoUQaB7klEPI0oxXsutQ7JIPgVX8MIPYw9xgm9Qal940GYm999aKCyTiEGsoyfAW1kNKDnu7Pz4RsJ8k2b5aVDJXANrLJ2CnHjxwmnkmn4vjAZ2YI6knP8VvVWEkOLmMZXN5ONOr3AP8PGjARDvWBF1a1R7hmHSPK0ZmebeTDbXz95Uyj-iaPkwg7GSQj9C2aj40WErBCJbE6nYCAejLeE0s0ww"/>
+</div>
+<div class="p-4">
+<h3 class="font-body-md text-body-md text-primary mb-1">Zenith Catchall Tray</h3>
+<p class="font-body-md text-body-md font-bold text-on-surface">$45.00</p>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="group border border-surface-container-high rounded-lg overflow-hidden hover:shadow-[0px_10px_30px_rgba(0,0,0,0.04)] transition-shadow">
+<div class="aspect-[4/5] bg-surface-container-lowest overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A close-up shot of a textured, off-white linen throw pillow." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5KOEINlpQpohfo79-lI35PEIj6p--EeDdb79-xr5vTHENGpOIzp6ak6qAAKd6LkEnW_hyIOKWpZKNqPZBLO_CwEaqTu7_hlcLjj_EyiFek80uD2dB3o195wStw8_K9QiNSLbWx1BaRKtVRnER9b9kW9ubw1h_YcN_iia1CRbTv7o3xYcEtbJV46I4YnQXnYa4AHXH7GyfuB_i1r6h6XHVck2ERf_GymqhGughNChasnNt7G2fdPNbbw"/>
+</div>
+<div class="p-4">
+<h3 class="font-body-md text-body-md text-primary mb-1">Linen Throw Pillow</h3>
+<p class="font-body-md text-body-md font-bold text-on-surface">$68.00</p>
+</div>
+</div>
+<!-- Product Card 4 -->
+<div class="group border border-surface-container-high rounded-lg overflow-hidden relative">
+<div class="aspect-[4/5] bg-surface-container-lowest overflow-hidden relative">
+<div class="absolute top-2 left-2 bg-surface-container-highest text-primary font-label-sm text-[10px] px-2 py-1 rounded-sm uppercase tracking-wider">New</div>
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A minimalist sculptural object made of pale, natural wood." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4GlduZmv2AbCraBCwiW1HmgM7y2r3q0BsYFIK9zjn795BzamveH00UFppXOOIKG7jy5cp0oOLOiNKSX4rfqbofB0Baj_BX49W-n9RH54v6ucK0vLj8l9ivwlk5plCprYeGs94177FrtYFuTRQNg2SU4BUjMGNXySwO2zjSjBLlbuCy5NQFLs8TuAhTs_RQjmoMqvm36nXT1TWED1R4aDLph-SBCrA4XIOxWYnCJhXBLogwY1Jn_A1Gw"/>
+</div>
+<div class="p-4">
+<h3 class="font-body-md text-body-md text-primary mb-1">Abstract Wood Sculpture</h3>
+<p class="font-body-md text-body-md font-bold text-on-surface">$120.00</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-low dark:bg-primary-container w-full mt-24">
+<div class="flex flex-col md:flex-row justify-between items-center py-12 max-w-container-max mx-auto px-margin-desktop px-margin-mobile gap-base">
+<div class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed mb-4 md:mb-0">
+                Lumina Shop
+            </div>
+<div class="flex flex-wrap justify-center gap-6">
+<a class="text-on-surface-variant dark:text-on-primary-container font-label-sm text-label-sm hover:text-on-surface dark:hover:text-primary-fixed transition-colors cursor-pointer" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant dark:text-on-primary-container font-label-sm text-label-sm hover:text-on-surface dark:hover:text-primary-fixed transition-colors cursor-pointer" href="#">Terms of Service</a>
+<a class="text-on-surface-variant dark:text-on-primary-container font-label-sm text-label-sm hover:text-on-surface dark:hover:text-primary-fixed transition-colors cursor-pointer" href="#">Shipping Info</a>
+<a class="text-on-surface-variant dark:text-on-primary-container font-label-sm text-label-sm hover:text-on-surface dark:hover:text-primary-fixed transition-colors cursor-pointer" href="#">Contact Us</a>
+</div>
+<div class="text-on-surface dark:text-on-primary-container font-label-sm text-label-sm mt-4 md:mt-0 text-center md:text-right">
+                © 2024 Lumina Shop. All rights reserved.
+            </div>
+</div>
+</footer>
+</body>
+</html>
