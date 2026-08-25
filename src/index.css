@@ -1604,7 +1604,7 @@ input::placeholder {
   line-height: 0;
   margin: 0;
   position: relative;
-  z-index: 2;
+  z-index: 5;
   pointer-events: none;
 }
 
@@ -1615,30 +1615,30 @@ input::placeholder {
 .waves {
   position: relative;
   width: 100%;
-  height: 90px;
-  min-height: 50px;
-  max-height: 120px;
-  margin-bottom: -1px;
+  height: 120px;
+  min-height: 70px;
+  max-height: 150px;
+  margin-bottom: -2px;
 }
 
 .parallax > use {
-  animation: move-wave 25s cubic-bezier(.55,.5,.45,.5) infinite;
+  animation: move-wave 20s cubic-bezier(.55,.5,.45,.5) infinite;
 }
 .parallax > use:nth-child(1) {
   animation-delay: -2s;
-  animation-duration: 7s;
+  animation-duration: 6s;
 }
 .parallax > use:nth-child(2) {
   animation-delay: -3s;
-  animation-duration: 10s;
+  animation-duration: 9s;
 }
 .parallax > use:nth-child(3) {
   animation-delay: -4s;
-  animation-duration: 13s;
+  animation-duration: 12s;
 }
 .parallax > use:nth-child(4) {
   animation-delay: -5s;
-  animation-duration: 20s;
+  animation-duration: 16s;
 }
 
 @keyframes move-wave {
@@ -1652,4 +1652,5 @@ input::placeholder {
     transform: translate3d(-90px, 0, 0);
   }
 }
+
 
