@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { useSwap } from '../context/SwapContext';
-import { TEAM_MEMBERS } from '../data/initialData';
 import { SwapModal } from '../components/skills/SwapModal';
-import { ArrowLeft, Sparkles, Users, Award, BookOpen, Star } from 'lucide-react';
+import { Star } from 'lucide-react';
 
 export const HomePage = ({ setActiveTab }) => {
   const { skills } = useSwap();
@@ -15,10 +14,6 @@ export const HomePage = ({ setActiveTab }) => {
         <div className="hero-blob blob1"></div>
         <div className="hero-blob blob2"></div>
         <div className="hero-content">
-          <div className="hero-badge">
-            <Sparkles size={16} />
-            <span>منصة تبادل المهارات الأولى عربياً</span>
-          </div>
           <h1>
             علّم ما تُتقنه
             <br />
@@ -41,22 +36,6 @@ export const HomePage = ({ setActiveTab }) => {
               تصفح المهارات 🔍
             </button>
           </div>
-        </div>
-      </section>
-
-      {/* About Platform & Codex_Nova Team */}
-      <section className="section" id="aboutSection">
-        <p className="section-label">رسالتنا</p>
-        <h2 className="section-title">عن منصة مهارة</h2>
-        <div className="divider"></div>
-        <p className="section-sub">تعرّف على الرؤية التي تقود منصتنا والفريق المطور لها</p>
-
-        <div className="about-box">
-          <p className="about-text">
-            منصة مهارة هي منصة تعليمية تبادلية تهدف إلى تعزيز التعلم التبادلي والتكافلي؛
-            بحيث إذا كان هناك شخص يمتلك مهارة معينة ويحتاج إلى تعلم مهارة أخرى،
-            يمكنه بسهولة التواصل مع شخص آخر يتبادل معه هذه الخبرات والمعارف بشكل مرن ومباشر.
-          </p>
         </div>
       </section>
 
@@ -104,32 +83,27 @@ export const HomePage = ({ setActiveTab }) => {
           <div className="cat-card" onClick={() => setActiveTab('skills')}>
             <div className="cat-icon">💻</div>
             <div className="cat-name">تقنية وبرمجة</div>
-            <div className="cat-count">١٤٢ مهارة</div>
           </div>
           <div className="cat-card" onClick={() => setActiveTab('skills')}>
             <div className="cat-icon">🎨</div>
             <div className="cat-name">تصميم وفنون</div>
-            <div className="cat-count">٩٨ مهارة</div>
           </div>
           <div className="cat-card" onClick={() => setActiveTab('skills')}>
             <div className="cat-icon">📸</div>
             <div className="cat-name">تصوير وإنتاج</div>
-            <div className="cat-count">٦٤ مهارة</div>
           </div>
           <div className="cat-card" onClick={() => setActiveTab('skills')}>
             <div className="cat-icon">📊</div>
             <div className="cat-name">أعمال وتسويق</div>
-            <div className="cat-count">٨٧ مهارة</div>
           </div>
           <div className="cat-card" onClick={() => setActiveTab('skills')}>
             <div className="cat-icon">🌍</div>
             <div className="cat-name">لغات وترجمة</div>
-            <div className="cat-count">٥٣ مهارة</div>
           </div>
           <div className="cat-card" onClick={() => setActiveTab('skills')}>
             <div className="cat-icon">🎵</div>
             <div className="cat-name">موسيقى وصوت</div>
-            <div className="cat-count">٤١ مهارة</div>
+          
           </div>
         </div>
       </section>
