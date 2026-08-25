@@ -4,6 +4,32 @@ import { TEAM_MEMBERS } from '../data/initialData';
 import { SwapModal } from '../components/skills/SwapModal';
 import { ArrowLeft, Sparkles, Users, Award, BookOpen, Star } from 'lucide-react';
 
+const WaveDivider = ({ flip = false, glowColor = 'rgba(245, 166, 35, 0.18)' }) => (
+  <div className={`wave-container ${flip ? 'wave-flip' : ''}`}>
+    <svg
+      className="waves"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlnsXlink="http://www.w3.org/1999/xlink"
+      viewBox="0 24 150 28"
+      preserveAspectRatio="none"
+      shapeRendering="auto"
+    >
+      <defs>
+        <path
+          id="gentle-wave"
+          d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18v44h-352z"
+        />
+      </defs>
+      <g className="parallax">
+        <use xlinkHref="#gentle-wave" x="48" y="0" fill={glowColor} />
+        <use xlinkHref="#gentle-wave" x="48" y="3" fill="rgba(29, 233, 182, 0.14)" />
+        <use xlinkHref="#gentle-wave" x="48" y="5" fill="rgba(22, 29, 46, 0.7)" />
+        <use xlinkHref="#gentle-wave" x="48" y="7" fill="var(--bg)" />
+      </g>
+    </svg>
+  </div>
+);
+
 export const HomePage = ({ setActiveTab }) => {
   const { skills } = useSwap();
   const [selectedSkillModal, setSelectedSkillModal] = useState(null);
@@ -41,22 +67,12 @@ export const HomePage = ({ setActiveTab }) => {
               تصفح المهارات 🔍
             </button>
           </div>
-          <div className="hero-stats">
-            <div className="stat">
-              <div className="stat-num">١٢ك+</div>
-              <div className="stat-label">مهارة متاحة</div>
-            </div>
-            <div className="stat">
-              <div className="stat-num">٤.٨ك+</div>
-              <div className="stat-label">عضو نشط</div>
-            </div>
-            <div className="stat">
-              <div className="stat-num">٩٨٠+</div>
-              <div className="stat-label">تبادل ناجح</div>
-            </div>
-          </div>
+
         </div>
       </section>
+
+      {/* Animated Wave Transition */}
+      <WaveDivider glowColor="rgba(245, 166, 35, 0.25)" />
 
       {/* About Platform & Codex_Nova Team */}
       <section className="section" id="aboutSection">
@@ -71,10 +87,11 @@ export const HomePage = ({ setActiveTab }) => {
             بحيث إذا كان هناك شخص يمتلك مهارة معينة ويحتاج إلى تعلم مهارة أخرى،
             يمكنه بسهولة التواصل مع شخص آخر يتبادل معه هذه الخبرات والمعارف بشكل مرن ومباشر.
           </p>
-        
-          
         </div>
       </section>
+
+      {/* Animated Wave Transition */}
+      <WaveDivider flip={true} glowColor="rgba(29, 233, 182, 0.2)" />
 
       {/* How it works */}
       <section className="section" id="how">
@@ -149,6 +166,9 @@ export const HomePage = ({ setActiveTab }) => {
           </div>
         </div>
       </section>
+
+      {/* Animated Wave Transition */}
+      <WaveDivider glowColor="rgba(245, 166, 35, 0.2)" />
 
       {/* Featured Skills Section */}
       <section className="section">
