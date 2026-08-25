@@ -1,5 +1,30 @@
-﻿node_modules/
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Production build outputs
 dist/
+build/
+**/dist/
+
+# Environment files
 .env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.env
+!*.env.example
 frontend/.env
 backend/.env
+backend/.env.local
+
+# IDE & OS files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Vercel
+.vercel
+skill-swap-platform/

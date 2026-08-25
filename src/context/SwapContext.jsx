@@ -1,124 +1,106 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import api from '../api/client';
+import { INITIAL_SKILLS, INITIAL_SWAPS } from '../data/initialData';
 import { useAuth } from './AuthContext';
 
 const SwapContext = createContext();
 
 export const SwapProvider = ({ children }) => {
-  const { isLoggedIn } = useAuth();
-  const [skills, setSkills] = useState([]);
-  const [swaps, setSwaps] = useState([]);
+  const { currentUser, isLoggedIn } = useAuth();
+  
+  const [allSkills, setAllSkills] = useState(() => {
+    try {
+      const saved = localStorage.getItem('mahara_skills');
+      if (saved) return JSON.parse(saved);
+    } catch (e) {
+      console.error('Error loading saved skills:', e);
+    }
+    return INITIAL_SKILLS;
+  });
+
+  const [swaps, setSwaps] = useState(() => {
+    try {
+      const saved = localStorage.getItem('mahara_swaps');
+      if (saved) return JSON.parse(saved);
+    } catch (e) {
+      console.error('Error loading saved swaps:', e);
+    }
+    return INITIAL_SWAPS;
+  });
+
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [loadingSkills, setLoadingSkills] = useState(false);
   const [loadingSwaps, setLoadingSwaps] = useState(false);
 
-  // Fetch skills from API based on search and category filters
+  useEffect(() => {
+    localStorage.setItem('mahara_skills', JSON.stringify(allSkills));
+  }, [allSkills]);
+
+  useEffect(() => {
+    localStorage.setItem('mahara_swaps', JSON.stringify(swaps));
+  }, [swaps]);
+
+  // Filter skills based on search query and category
+  const skills = allSkills.filter(skill => {
+    const matchesSearch = !searchQuery.trim() || 
+      skill.title.toLowerCase().includes(searchQuery.toLowerCase().trim()) ||
+      (skill.wants && skill.wants.toLowerCase().includes(searchQuery.toLowerCase().trim())) ||
+      (skill.owner && skill.owner.toLowerCase().includes(searchQuery.toLowerCase().trim()));
+    
+    const matchesCategory = !selectedCategory || selectedCategory === 'all' || skill.category === selectedCategory;
+
+    return matchesSearch && matchesCategory;
+  });
+
   const fetchSkills = useCallback(async () => {
-    setLoadingSkills(true);
-    try {
-      const params = {};
-      if (searchQuery.trim()) params.search = searchQuery.trim();
-      if (selectedCategory && selectedCategory !== 'all') params.category = selectedCategory;
+    // Client-side instant sync
+  }, []);
 
-      const { data } = await api.get('/skills', { params });
-      if (data.success) {
-        setSkills(data.skills || []);
-      }
-    } catch (err) {
-      console.error('Fetch skills error:', err);
-    } finally {
-      setLoadingSkills(false);
-    }
-  }, [searchQuery, selectedCategory]);
-
-  // Fetch swaps from API for current authenticated user
   const fetchSwaps = useCallback(async () => {
-    if (!isLoggedIn) {
-      setSwaps([]);
-      return;
-    }
-    setLoadingSwaps(true);
-    try {
-      const { data } = await api.get('/swaps');
-      if (data.success) {
-        setSwaps(data.swaps || []);
-      }
-    } catch (err) {
-      console.error('Fetch swaps error:', err);
-    } finally {
-      setLoadingSwaps(false);
-    }
-  }, [isLoggedIn]);
-
-  useEffect(() => {
-    fetchSkills();
-  }, [fetchSkills]);
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      fetchSwaps();
-    }
-  }, [isLoggedIn, fetchSwaps]);
+    // Client-side instant sync
+  }, []);
 
   const addSkill = async (skillData) => {
-    try {
-      const payload = {
-        title: skillData.title,
-        category: skillData.category || 'tech',
-        wants: skillData.wants,
-        icon: skillData.icon || '💡'
-      };
+    const ownerName = currentUser ? currentUser.name : 'أحمد رضا';
+    const newSkill = {
+      id: 'skill_' + Date.now(),
+      _id: 'skill_' + Date.now(),
+      title: skillData.title,
+      category: skillData.category || 'tech',
+      icon: skillData.icon || '💡',
+      owner: ownerName,
+      location: currentUser?.location || 'القاهرة',
+      wants: skillData.wants || 'تبادل خبرات',
+      rating: 5.0,
+      bg: 'linear-gradient(135deg, #1a2540, #0f1a30)'
+    };
 
-      const { data } = await api.post('/skills', payload);
-      if (data.success) {
-        await fetchSkills();
-        return { success: true, message: data.message || 'تمت إضافة المهارة بنجاح' };
-      }
-      return { success: false, message: data.message || 'فشل إضافة المهارة' };
-    } catch (err) {
-      const message = err.response?.data?.message || 'تعذر إضافة المهارة';
-      return { success: false, message };
-    }
+    setAllSkills(prev => [newSkill, ...prev]);
+    return { success: true, message: 'تمت إضافة المهارة بنجاح' };
   };
 
   const proposeSwap = async (targetSkill, offeredSkillTitle) => {
-    try {
-      const skillId = targetSkill._id || targetSkill.id;
-      const requestedSkill = targetSkill.title;
+    const proposerName = currentUser ? currentUser.name : 'أحمد رضا';
+    const receiverName = targetSkill.owner || 'إسراء صلاح';
 
-      const { data } = await api.post('/swaps', {
-        skillId,
-        offeredSkill: offeredSkillTitle,
-        requestedSkill
-      });
+    const newSwap = {
+      id: 'swap_' + Date.now(),
+      _id: 'swap_' + Date.now(),
+      proposer: proposerName,
+      receiver: receiverName,
+      offeredSkill: offeredSkillTitle,
+      requestedSkill: targetSkill.title,
+      status: 'pending',
+      date: new Date().toISOString().split('T')[0]
+    };
 
-      if (data.success) {
-        await fetchSwaps();
-        return {
-          success: true,
-          message: data.message || `تم إرسال طلب التبادل بنجاح!`
-        };
-      }
-      return { success: false, message: data.message || 'فشل إرسال طلب التبادل' };
-    } catch (err) {
-      const message = err.response?.data?.message || 'تعذر إرسال طلب التبادل';
-      return { success: false, message };
-    }
+    setSwaps(prev => [newSwap, ...prev]);
+    return { success: true, message: 'تم إرسال طلب التبادل بنجاح!' };
   };
 
   const updateSwapStatus = async (swapId, newStatus) => {
-    try {
-      const { data } = await api.patch(`/swaps/${swapId}`, { status: newStatus });
-      if (data.success) {
-        await fetchSwaps();
-        return { success: true, message: data.message || 'تم تحديث حالة الطلب' };
-      }
-      return { success: false, message: data.message || 'فشل تحديث الحالة' };
-    } catch (err) {
-      const message = err.response?.data?.message || 'تعذر تحديث حالة الطلب';
-      return { success: false, message };
-    }
+    setSwaps(prev => prev.map(s => (s.id === swapId || s._id === swapId) ? { ...s, status: newStatus } : s));
+    return { success: true, message: 'تم تحديث حالة الطلب' };
   };
 
   return (

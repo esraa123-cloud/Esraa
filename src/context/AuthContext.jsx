@@ -1,51 +1,46 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import api from '../api/client';
+import { INITIAL_USERS } from '../data/initialData';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(() => {
-    try {
-      const saved = localStorage.getItem('mahara_user');
-      return saved ? JSON.parse(saved) : null;
-    } catch (e) {
-      return null;
-    }
-  });
-
-  const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    return Boolean(localStorage.getItem('mahara_token'));
-  });
-
-  const [loading, setLoading] = useState(true);
-
-  // Helper to format user object to ensure fallback fields exist for the UI
   const formatUser = (user) => {
     if (!user) return null;
     return {
       ...user,
-      id: user._id || user.id,
-      name: user.name || `${user.fname || ''} ${user.lname || ''}`.trim() || 'مستخدم',
-      avatar: user.avatar || (user.fname ? user.fname.charAt(0) : 'ع') + (user.lname ? user.lname.charAt(0) : ''),
+      id: user._id || user.id || 'u1',
+      name: user.name || `${user.fname || ''} ${user.lname || ''}`.trim() || 'إسراء صلاح',
+      avatar: user.avatar || 'إ ص',
       skillsTeach: Array.isArray(user.skillsTeach) ? user.skillsTeach : [],
       skillsLearn: Array.isArray(user.skillsLearn) ? user.skillsLearn : [],
       rating: user.rating ?? 5.0,
-      swapsCompleted: user.swapsCompleted ?? 0
+      swapsCompleted: user.swapsCompleted ?? 18
     };
   };
 
-  const persistUserData = (user, token) => {
-    if (token) {
-      localStorage.setItem('mahara_token', token);
+  const [currentUser, setCurrentUser] = useState(() => {
+    try {
+      const saved = localStorage.getItem('mahara_user');
+      if (saved) return JSON.parse(saved);
+    } catch (e) {
+      console.error('Error loading saved user:', e);
     }
-    if (user) {
-      const formatted = formatUser(user);
-      localStorage.setItem('mahara_user', JSON.stringify(formatted));
-      setCurrentUser(formatted);
-      setIsLoggedIn(true);
-      return formatted;
-    }
-    return null;
+    return formatUser(INITIAL_USERS[1] || INITIAL_USERS[0]);
+  });
+
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    return Boolean(localStorage.getItem('mahara_token') || currentUser);
+  });
+
+  const [loading, setLoading] = useState(false);
+
+  const persistUserData = (user, token = 'demo_token_12345') => {
+    const formatted = formatUser(user);
+    localStorage.setItem('mahara_token', token);
+    localStorage.setItem('mahara_user', JSON.stringify(formatted));
+    setCurrentUser(formatted);
+    setIsLoggedIn(true);
+    return formatted;
   };
 
   const clearUserData = () => {
@@ -55,112 +50,79 @@ export const AuthProvider = ({ children }) => {
     setIsLoggedIn(false);
   };
 
-  // Restore & verify session on mount if token exists
-  useEffect(() => {
-    const fetchMe = async () => {
-      const token = localStorage.getItem('mahara_token');
-      if (!token) {
-        setLoading(false);
-        return;
-      }
-
-      try {
-        const { data } = await api.get('/auth/me');
-        if (data.success && data.user) {
-          persistUserData(data.user);
-        } else {
-          clearUserData();
-        }
-      } catch (err) {
-        console.error('Session restore error:', err);
-        // Only clear if 401 Unauthorized (token invalid/expired)
-        if (err.response?.status === 401) {
-          clearUserData();
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchMe();
-  }, []);
-
   const login = async (email, password) => {
+    setLoading(true);
     try {
-      const { data } = await api.post('/auth/login', { email, password });
-      if (data.success) {
-        const formatted = persistUserData(data.user, data.token);
-        return { success: true, message: data.message || 'تم تسجيل الدخول بنجاح', user: formatted };
-      }
-      return { success: false, message: data.message || 'فشل تسجيل الدخول' };
-    } catch (err) {
-      const message = err.response?.data?.message || err.message || 'تعذر الاتصال بالخادم، يرجى المحاولة لاحقاً';
-      return { success: false, message };
+      const found = INITIAL_USERS.find(u => u.email === email) || {
+        id: 'u_' + Date.now(),
+        name: email.split('@')[0],
+        fname: email.split('@')[0],
+        lname: '',
+        email,
+        skillsTeach: ['تطوير React', 'JavaScript'],
+        skillsLearn: ['تصميم UI/UX'],
+        rating: 5.0,
+        swapsCompleted: 0
+      };
+      const formatted = persistUserData(found);
+      return { success: true, message: 'تم تسجيل الدخول بنجاح', user: formatted };
+    } finally {
+      setLoading(false);
     }
   };
 
   const register = async (userData) => {
+    setLoading(true);
     try {
-      const { data } = await api.post('/auth/register', userData);
-      if (data.success) {
-        const formatted = persistUserData(data.user, data.token);
-        return { success: true, message: data.message || 'تم إنشاء الحساب بنجاح', user: formatted };
-      }
-      return { success: false, message: data.message || 'فشل إنشاء الحساب' };
-    } catch (err) {
-      const message = err.response?.data?.message || err.message || 'تعذر إنشاء الحساب، يرجى التحقق من البيانات';
-      return { success: false, message };
+      const newUser = {
+        id: 'u_' + Date.now(),
+        name: `${userData.fname || ''} ${userData.lname || ''}`.trim() || userData.username || 'مستخدم جديد',
+        fname: userData.fname || '',
+        lname: userData.lname || '',
+        email: userData.email,
+        username: userData.username,
+        country: userData.country || 'مصر',
+        skillsTeach: userData.skillsTeach || [],
+        skillsLearn: userData.skillsLearn || [],
+        rating: 5.0,
+        swapsCompleted: 0
+      };
+      const formatted = persistUserData(newUser);
+      return { success: true, message: 'تم إنشاء الحساب بنجاح', user: formatted };
+    } finally {
+      setLoading(false);
     }
   };
 
   const logout = async () => {
-    try {
-      await api.post('/auth/logout');
-    } catch (err) {
-      console.warn('Logout API warning:', err);
-    } finally {
-      clearUserData();
-    }
+    clearUserData();
   };
 
   const updateProfile = async (updatedFields) => {
-    try {
-      const { data } = await api.put('/users/profile', updatedFields);
-      if (data.success && data.user) {
-        const formatted = persistUserData(data.user);
-        return { success: true, message: data.message || 'تم تحديث البيانات', user: formatted };
-      }
-      return { success: false, message: data.message || 'فشل تحديث البيانات' };
-    } catch (err) {
-      const message = err.response?.data?.message || 'تعذر تحديث البيانات';
-      return { success: false, message };
-    }
+    if (!currentUser) return { success: false, message: 'غير مسجل الدخول' };
+    const updated = formatUser({ ...currentUser, ...updatedFields });
+    persistUserData(updated);
+    return { success: true, message: 'تم تحديث البيانات بنجاح', user: updated };
   };
 
   const addTeachSkill = async (skill) => {
-    try {
-      const { data } = await api.post('/users/profile/skills-teach', { skill });
-      if (data.success && data.user) {
-        const formatted = persistUserData(data.user);
-        return { success: true, user: formatted };
-      }
-      return { success: false };
-    } catch (err) {
-      return { success: false, message: err.response?.data?.message || 'تعذر إضافة المهارة' };
-    }
+    if (!currentUser) return { success: false };
+    const teach = currentUser.skillsTeach.includes(skill)
+      ? currentUser.skillsTeach
+      : [...currentUser.skillsTeach, skill];
+    const updated = formatUser({ ...currentUser, skillsTeach: teach });
+    persistUserData(updated);
+    return { success: true, user: updated };
   };
 
   const addLearnSkill = async (skill) => {
-    try {
-      const { data } = await api.post('/users/profile/skills-learn', { skill });
-      if (data.success && data.user) {
-        const formatted = persistUserData(data.user);
-        return { success: true, user: formatted };
-      }
-      return { success: false };
-    } catch (err) {
-      return { success: false, message: err.response?.data?.message || 'تعذر إضافة المهارة' };
-    }
+    if (!currentUser) return { success: false };
+    const learn = currentUser.skillsLearn.includes(skill)
+      ? currentUser.skillsLearn
+      : [...currentUser.skillsLearn, skill];
+    const updated = formatUser({ ...currentUser, skillsLearn: learn });
+    persistUserData(updated);
+    return { success: true, user: updated };
   };
 
   return (

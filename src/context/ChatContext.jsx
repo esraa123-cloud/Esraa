@@ -1,88 +1,81 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import api from '../api/client';
+import { INITIAL_CHATS } from '../data/initialData';
 import { useAuth } from './AuthContext';
 
 const ChatContext = createContext();
 
 export const ChatProvider = ({ children }) => {
   const { isLoggedIn } = useAuth();
-  const [chats, setChats] = useState([]);
-  const [activeChatId, setActiveChatId] = useState(null);
+  
+  const [chats, setChats] = useState(() => {
+    try {
+      const saved = localStorage.getItem('mahara_chats');
+      if (saved) return JSON.parse(saved);
+    } catch (e) {
+      console.error('Error loading saved chats:', e);
+    }
+    return INITIAL_CHATS;
+  });
+
+  const [activeChatId, setActiveChatId] = useState(() => {
+    return chats.length > 0 ? (chats[0].id || chats[0]._id) : null;
+  });
+
   const [loadingChats, setLoadingChats] = useState(false);
 
-  const fetchChats = useCallback(async () => {
-    if (!isLoggedIn) {
-      setChats([]);
-      setActiveChatId(null);
-      return;
-    }
-    setLoadingChats(true);
-    try {
-      const { data } = await api.get('/chats');
-      if (data.success && Array.isArray(data.chats)) {
-        setChats(data.chats);
-        if (data.chats.length > 0 && !activeChatId) {
-          setActiveChatId(data.chats[0].id || data.chats[0]._id);
-        }
-      }
-    } catch (err) {
-      console.error('Fetch chats error:', err);
-    } finally {
-      setLoadingChats(false);
-    }
-  }, [isLoggedIn, activeChatId]);
-
   useEffect(() => {
-    if (isLoggedIn) {
-      fetchChats();
-    }
-  }, [isLoggedIn, fetchChats]);
+    localStorage.setItem('mahara_chats', JSON.stringify(chats));
+  }, [chats]);
+
+  const fetchChats = useCallback(async () => {
+    // Client-side sync
+  }, []);
 
   const activeChat = chats.find(c => c.id === activeChatId || c._id === activeChatId) || chats[0] || null;
 
   const sendMessage = async (chatId, text) => {
-    if (!text.trim() || !chatId) return;
+    if (!text.trim() || !chatId) return { success: false, message: 'رسالة فارغة' };
 
-    try {
-      const { data } = await api.post(`/chats/${chatId}/messages`, { text: text.trim() });
-      if (data.success && data.chat) {
-        setChats(prev => prev.map(c => (c.id === chatId || c._id === chatId) ? data.chat : c));
-        return { success: true };
+    const newMsg = {
+      id: 'm_' + Date.now(),
+      sender: 'me',
+      text: text.trim(),
+      time: new Date().toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' })
+    };
+
+    setChats(prev => prev.map(c => {
+      if (c.id === chatId || c._id === chatId) {
+        return {
+          ...c,
+          messages: [...(c.messages || []), newMsg]
+        };
       }
-      return { success: false, message: data.message };
-    } catch (err) {
-      const message = err.response?.data?.message || 'تعذر إرسال الرسالة';
-      return { success: false, message };
-    }
+      return c;
+    }));
+
+    return { success: true };
   };
 
   const startChatWithUser = async (userName, userAvatar, peerId) => {
-    if (!isLoggedIn) return { success: false, message: 'يرجى تسجيل الدخول أولاً' };
-
-    try {
-      const payload = peerId ? { peerId } : { peerName: userName };
-      const { data } = await api.post('/chats/start', payload);
-
-      if (data.success && data.chat) {
-        const newChat = data.chat;
-        const chatId = newChat.id || newChat._id;
-        
-        setChats(prev => {
-          const exists = prev.find(c => c.id === chatId || c._id === chatId);
-          if (exists) {
-            return prev.map(c => (c.id === chatId || c._id === chatId) ? newChat : c);
-          }
-          return [newChat, ...prev];
-        });
-
-        setActiveChatId(chatId);
-        return { success: true, chat: newChat };
-      }
-      return { success: false, message: data.message };
-    } catch (err) {
-      const message = err.response?.data?.message || 'تعذر بدء المحادثة مع هذا المستخدم';
-      return { success: false, message };
+    const existing = chats.find(c => c.peerName === userName || c.peerId === peerId);
+    if (existing) {
+      const id = existing.id || existing._id;
+      setActiveChatId(id);
+      return { success: true, chat: existing };
     }
+
+    const newChat = {
+      id: 'c_' + Date.now(),
+      _id: 'c_' + Date.now(),
+      peerId: peerId || 'u_' + Date.now(),
+      peerName: userName || 'مستخدم',
+      peerAvatar: userAvatar || (userName ? userName.charAt(0) : 'ع'),
+      messages: []
+    };
+
+    setChats(prev => [newChat, ...prev]);
+    setActiveChatId(newChat.id);
+    return { success: true, chat: newChat };
   };
 
   return (
