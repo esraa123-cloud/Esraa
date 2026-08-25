@@ -25,11 +25,11 @@ export const AuthProvider = ({ children }) => {
     } catch (e) {
       console.error('Error loading saved user:', e);
     }
-    return formatUser(INITIAL_USERS[1] || INITIAL_USERS[0]);
+    return null;
   });
 
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    return Boolean(localStorage.getItem('mahara_token') || currentUser);
+    return Boolean(localStorage.getItem('mahara_token') && localStorage.getItem('mahara_user'));
   });
 
   const [loading, setLoading] = useState(false);
