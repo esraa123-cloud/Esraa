@@ -9,7 +9,7 @@ export const SwapProvider = ({ children }) => {
 
   const [allSkills, setAllSkills] = useState(() => {
     try {
-      const saved = localStorage.getItem('mahara_skills_v3');
+      const saved = localStorage.getItem('mahara_skills_v5');
       if (saved) return JSON.parse(saved);
     } catch (e) {
       console.error('Error loading saved skills:', e);
@@ -19,7 +19,7 @@ export const SwapProvider = ({ children }) => {
 
   const [swaps, setSwaps] = useState(() => {
     try {
-      const saved = localStorage.getItem('mahara_swaps_v3');
+      const saved = localStorage.getItem('mahara_swaps_v5');
       if (saved) return JSON.parse(saved);
     } catch (e) {
       console.error('Error loading saved swaps:', e);
@@ -33,11 +33,11 @@ export const SwapProvider = ({ children }) => {
   const [loadingSwaps, setLoadingSwaps] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem('mahara_skills_v3', JSON.stringify(allSkills));
+    localStorage.setItem('mahara_skills_v5', JSON.stringify(allSkills));
   }, [allSkills]);
 
   useEffect(() => {
-    localStorage.setItem('mahara_swaps_v3', JSON.stringify(swaps));
+    localStorage.setItem('mahara_swaps_v5', JSON.stringify(swaps));
   }, [swaps]);
 
 
@@ -54,15 +54,17 @@ export const SwapProvider = ({ children }) => {
   });
 
   const fetchSkills = useCallback(async () => {
-    // Client-side instant sync
+    setLoadingSkills(true);
+    setTimeout(() => setLoadingSkills(false), 200);
   }, []);
 
   const fetchSwaps = useCallback(async () => {
-    // Client-side instant sync
+    setLoadingSwaps(true);
+    setTimeout(() => setLoadingSwaps(false), 200);
   }, []);
 
   const addSkill = async (skillData) => {
-    const ownerName = currentUser ? currentUser.name : 'نور صلاح';
+    const ownerName = currentUser ? currentUser.name : 'إسراء صلاح';
     const newSkill = {
       id: 'skill_' + Date.now(),
       _id: 'skill_' + Date.now(),
@@ -70,19 +72,19 @@ export const SwapProvider = ({ children }) => {
       category: skillData.category || 'tech',
       icon: skillData.icon || '💡',
       owner: ownerName,
-      location: currentUser?.location || 'مصر',
+      location: currentUser?.location || 'قنا',
       wants: skillData.wants || 'تبادل خبرات',
       rating: 5.0,
       bg: 'linear-gradient(135deg, #1a2540, #0f1a30)'
     };
 
     setAllSkills(prev => [newSkill, ...prev]);
-    return { success: true, message: 'تمت إضافة المهارة بنجاح' };
+    return { success: true, skill: newSkill };
   };
 
   const proposeSwap = async (targetSkill, offeredSkillTitle) => {
-    const proposerName = currentUser ? currentUser.name : 'نور صلاح';
-    const receiverName = targetSkill.owner || 'إسراء صلاح';
+    const proposerName = currentUser ? currentUser.name : 'إسراء صلاح';
+    const receiverName = targetSkill.owner || 'سارة منصور';
 
     const newSwap = {
       id: 'swap_' + Date.now(),

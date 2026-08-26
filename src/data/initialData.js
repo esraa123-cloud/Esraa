@@ -3,7 +3,7 @@ export const TEAM_MEMBERS = [
 ];
 
 export const INITIAL_SKILLS = [
-  { id: '1', title: 'تطوير مواقع ويب – React', category: 'tech', icon: '💻', owner: 'نور صلاح', location: 'القاهرة', wants: 'تصميم UI', rating: 5, bg: 'linear-gradient(135deg, #1a2540, #0f1a30)' },
+  { id: '1', title: 'تطوير مواقع ويب – React', category: 'tech', icon: '💻', owner: 'إسراء صلاح', location: 'قنا', wants: 'تصميم UI', rating: 5, bg: 'linear-gradient(135deg, #1a2540, #0f1a30)' },
   { id: '2', title: 'تصميم جرافيك احترافي', category: 'design', icon: '🎨', owner: 'سارة منصور', location: 'الإسكندرية', wants: 'تسويق محتوى', rating: 4.8, bg: 'linear-gradient(135deg, #1a1f30, #121830)' },
   { id: '3', title: 'اللغة الإسبانية – محادثة', category: 'languages', icon: '🌍', owner: 'نورهان أحمد', location: 'الجيزة', wants: 'تطوير بايثون', rating: 5, bg: 'linear-gradient(135deg, #241e12, #18140c)' },
   { id: '4', title: 'تصوير المنتجات والفيديو', category: 'photo', icon: '📸', owner: 'مريم السيد', location: 'المنصورة', wants: 'تسويق رقمي', rating: 4.9, bg: 'linear-gradient(135deg, #102420, #0c1815)' },
@@ -14,11 +14,11 @@ export const INITIAL_SKILLS = [
 export const INITIAL_USERS = [
   {
     id: 'u1',
-    name: 'نور صلاح',
-    username: 'nour_react',
+    name: 'إسراء صلاح',
+    username: 'esraa_react',
     title: 'مطورة ويب متخصصة React',
-    location: 'مصر - القاهرة',
-    avatar: 'ن ص',
+    location: 'مصر - قنا',
+    avatar: 'إ ص',
     bio: 'شغوفة بتطوير واجهات المستخدم التفاعلية وصناعة تجارب رقمية ممتازة.',
     skillsTeach: ['تطوير React', 'JavaScript', 'HTML/CSS'],
     skillsLearn: ['تصميم UI/UX', 'Figma', 'إدارة المشاريع'],
@@ -27,11 +27,11 @@ export const INITIAL_USERS = [
   },
   {
     id: 'u2',
-    name: 'إسراء صلاح',
-    username: 'esraa_nova',
+    name: 'نور أحمد',
+    username: 'nour_nova',
     title: 'مهندسة برمجيات وواجهات',
-    location: 'مصر - الجيزة',
-    avatar: 'إ ص',
+    location: 'مصر - القاهرة',
+    avatar: 'ن أ',
     bio: 'مهندسة برمجيات وشغوفة بالبرمجة وتبادل الخبرات المعرفية في مصر.',
     skillsTeach: ['تطوير الويب', 'تصميم واجهات', 'حل المشكلات'],
     skillsLearn: ['ذكاء اصطناعي', 'تطوير تطبيقات الجوال'],
@@ -57,12 +57,12 @@ export const INITIAL_CHATS = [
   {
     id: 'c1',
     peerId: 'u2',
-    peerName: 'إسراء صلاح',
-    peerAvatar: 'إ ص',
+    peerName: 'نور أحمد',
+    peerAvatar: 'ن أ',
     active: true,
     messages: [
       { id: 'm1', sender: 'peer', text: 'أهلاً بك! شاهدت مهاراتك في تطوير الويب، يسعدني التبادل معك.', time: '10:15 م' },
-      { id: 'm2', sender: 'me', text: 'أهلاً يا إسراء، يسعدني جداً ذلك! ما هي المهارات التي تودين تعلمها؟', time: '10:20 م' },
+      { id: 'm2', sender: 'me', text: 'أهلاً يا نور، يسعدني جداً ذلك! ما هي المهارات التي تودين تعلمها؟', time: '10:20 م' },
       { id: 'm3', sender: 'peer', text: 'أريد تعميق معرفتي بـ React hooks وState Management، مقابل تعليمك أساسيات تصميم UI.', time: '10:25 م' }
     ]
   },
@@ -81,8 +81,8 @@ export const INITIAL_CHATS = [
 export const INITIAL_SWAPS = [
   {
     id: 's1',
-    proposer: 'نور صلاح',
-    receiver: 'إسراء صلاح',
+    proposer: 'إسراء صلاح',
+    receiver: 'نور أحمد',
     offeredSkill: 'تطوير React',
     requestedSkill: 'تصميم UI/UX',
     status: 'accepted',
@@ -91,7 +91,7 @@ export const INITIAL_SWAPS = [
   {
     id: 's2',
     proposer: 'سارة منصور',
-    receiver: 'نور صلاح',
+    receiver: 'إسراء صلاح',
     offeredSkill: 'تصميم جرافيك',
     requestedSkill: 'تطوير HTML/CSS',
     status: 'pending',

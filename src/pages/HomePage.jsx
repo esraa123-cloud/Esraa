@@ -186,10 +186,10 @@ export const HomePage = ({ setActiveTab }) => {
         <div className="testimonials-grid">
           <div className="testimonial-card">
             <div className="t-user-info">
-              <div className="t-avatar-box">ن ص</div>
+              <div className="t-avatar-box">إ ص</div>
               <div>
-                <h4>نور صلاح</h4>
-                <span>مطورة ويب (القاهرة)</span>
+                <h4>إسراء صلاح</h4>
+                <span>مطورة ويب (قنا)</span>
               </div>
             </div>
             <p className="t-comment">
