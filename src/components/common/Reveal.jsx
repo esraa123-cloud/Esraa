@@ -4,10 +4,10 @@ export const Reveal = ({
   children,
   variant = 'fade-up',
   delay = 0,
-  duration = 0.9,
+  duration = 0.8,
   className = '',
   style = {},
-  threshold = 0.2,
+  threshold = 0.05,
   ...props
 }) => {
   const ref = useRef(null);
@@ -27,7 +27,7 @@ export const Reveal = ({
       ([entry]) => {
         setIsVisible(entry.isIntersecting);
       },
-      { threshold, rootMargin: '0px 0px -20px 0px' }
+      { threshold, rootMargin: '0px 0px -10px 0px' }
     );
 
     observer.observe(element);

@@ -146,7 +146,7 @@ export const SkillsPage = ({ setActiveTab }) => {
         ) : (
           <div className="skills-grid">
             {skills.map((skill, idx) => (
-              <Reveal key={skill.id || skill._id} variant="fade-up" delay={0.12 + (idx % 6) * 0.08}>
+              <Reveal key={skill.id || skill._id} variant="fade-up" delay={(idx % 3) * 0.05}>
                 <div className="skill-card">
                   <div className="skill-card-top" style={{ background: skill.bg }}>
                     <span>{skill.icon || '💡'}</span>
