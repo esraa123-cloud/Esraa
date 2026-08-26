@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
-import { LogOut, Menu, X } from 'lucide-react';
+import { LogOut, Menu, X, Repeat } from 'lucide-react';
 
 export const Navbar = ({ activeTab, setActiveTab }) => {
   const { currentUser, isLoggedIn, logout } = useAuth();
@@ -26,8 +26,14 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
         >
           {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
+
         <div className="logo" onClick={() => handleNavClick('home')}>
-          مهارة<span>.</span>
+          <div className="logo-icon-badge">
+            <Repeat size={18} />
+          </div>
+          <div className="logo-text">
+            مهارة<span className="logo-dot">.</span>
+          </div>
         </div>
       </div>
 
@@ -74,7 +80,7 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
               onClick={() => handleNavClick('profile')}
               title="الملف الشخصي"
             >
-              <div className="user-avatar-sm">{currentUser.avatar || 'ع'}</div>
+              <div className="user-avatar-sm">{currentUser.avatar || 'إ'}</div>
               <span className="nav-username">{currentUser.name}</span>
             </div>
             <button
