@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
-import { LogOut, Menu, X } from 'lucide-react';
+import { LogOut, Menu, X, Repeat } from 'lucide-react';
 
 export const Navbar = ({ activeTab, setActiveTab }) => {
   const { currentUser, isLoggedIn, logout } = useAuth();
@@ -28,21 +28,10 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
         </button>
 
         <div className="logo" onClick={() => handleNavClick('home')}>
-          <div className="logo-symbol-wrap">
-            <svg width="34" height="34" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id="mLogoGradNav" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#f5a623" />
-                  <stop offset="50%" stopColor="#ffc142" />
-                  <stop offset="100%" stopColor="#1de9b6" />
-                </linearGradient>
-              </defs>
-              <circle cx="18" cy="18" r="16.5" fill="url(#mLogoGradNav)" fillOpacity="0.1" stroke="url(#mLogoGradNav)" strokeWidth="1.8" />
-              <path d="M11 22V17C11 13.5 13.8 11 17.5 11C21 11 24 13.5 24 17C24 20.5 21 23 17.5 23C15 23 13 21.5 13 19.5" stroke="url(#mLogoGradNav)" strokeWidth="2.5" strokeLinecap="round" />
-              <circle cx="25" cy="11" r="3" fill="#1de9b6" />
-            </svg>
+          <div className="logo-icon-badge">
+            <Repeat size={18} />
           </div>
-          <div className="logo-brand-title">
+          <div className="logo-text">
             مهارة
           </div>
         </div>

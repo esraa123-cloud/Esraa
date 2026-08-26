@@ -86,7 +86,7 @@ nav {
 .logo {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.65rem;
   cursor: pointer;
   user-select: none;
   transition: transform 0.25s ease;
@@ -94,23 +94,28 @@ nav {
 }
 
 .logo:hover {
-  transform: translateY(-1px) scale(1.02);
+  transform: scale(1.03);
 }
 
-.logo-symbol-wrap {
+.logo-icon-badge {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--accent), var(--teal));
+  color: #000;
   display: flex;
   align-items: center;
   justify-content: center;
-  filter: drop-shadow(0 4px 12px rgba(245, 166, 35, 0.25));
-  transition: filter 0.3s ease, transform 0.4s ease;
+  box-shadow: 0 4px 15px rgba(245, 166, 35, 0.35);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
-.logo:hover .logo-symbol-wrap {
-  filter: drop-shadow(0 4px 18px rgba(29, 233, 182, 0.45));
+.logo:hover .logo-icon-badge {
   transform: rotate(180deg);
+  box-shadow: 0 4px 20px rgba(29, 233, 182, 0.45);
 }
 
-.logo-brand-title {
+.logo-text {
   font-family: 'Tajawal', sans-serif;
   font-size: 1.7rem;
   font-weight: 900;
@@ -119,6 +124,7 @@ nav {
   -webkit-text-fill-color: transparent;
   letter-spacing: -0.5px;
 }
+
 
 
 
