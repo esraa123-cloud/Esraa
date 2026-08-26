@@ -29,17 +29,17 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
 
         <div className="logo" onClick={() => handleNavClick('home')}>
           <div className="logo-symbol-wrap">
-            <svg width="30" height="30" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg width="34" height="34" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
               <defs>
-                <linearGradient id="logoGradNav" x1="0%" y1="0%" x2="100%" y2="100%">
+                <linearGradient id="mLogoGradNav" x1="0%" y1="0%" x2="100%" y2="100%">
                   <stop offset="0%" stopColor="#f5a623" />
+                  <stop offset="50%" stopColor="#ffc142" />
                   <stop offset="100%" stopColor="#1de9b6" />
                 </linearGradient>
               </defs>
-              <rect width="32" height="32" rx="9" fill="url(#logoGradNav)" fillOpacity="0.12" stroke="url(#logoGradNav)" strokeWidth="1.5" />
-              <path d="M10 12C10 9.79 11.79 8 14 8H18C20.21 8 22 9.79 22 12V13M22 20C22 22.21 20.21 24 18 24H14C11.79 24 10 22.21 10 20V19" stroke="url(#logoGradNav)" strokeWidth="2.2" strokeLinecap="round" />
-              <path d="M19.5 15L22.5 12L19.5 9" stroke="url(#logoGradNav)" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
-              <path d="M12.5 17L9.5 20L12.5 23" stroke="url(#logoGradNav)" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+              <circle cx="18" cy="18" r="16.5" fill="url(#mLogoGradNav)" fillOpacity="0.1" stroke="url(#mLogoGradNav)" strokeWidth="1.8" />
+              <path d="M11 22V17C11 13.5 13.8 11 17.5 11C21 11 24 13.5 24 17C24 20.5 21 23 17.5 23C15 23 13 21.5 13 19.5" stroke="url(#mLogoGradNav)" strokeWidth="2.5" strokeLinecap="round" />
+              <circle cx="25" cy="11" r="3" fill="#1de9b6" />
             </svg>
           </div>
           <div className="logo-brand-title">
@@ -109,7 +109,7 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
               تسجيل الدخول
             </button>
             <button className="btn-solid" onClick={() => handleNavClick('register')}>
-              انضم مجاناً
+              أنشئ حساب
             </button>
           </>
         )}
