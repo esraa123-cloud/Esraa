@@ -1,11 +1,25 @@
 import React, { useState } from 'react';
 import { useSwap } from '../context/SwapContext';
 import { SwapModal } from '../components/skills/SwapModal';
-import { Star } from 'lucide-react';
+import { Star, Search, Sparkles } from 'lucide-react';
 
 export const HomePage = ({ setActiveTab }) => {
-  const { skills } = useSwap();
+  const { skills, setSearchQuery, setSelectedCategory } = useSwap();
   const [selectedSkillModal, setSelectedSkillModal] = useState(null);
+  const [heroSearch, setHeroSearch] = useState('');
+
+  const handleHeroSearch = (e) => {
+    e.preventDefault();
+    if (heroSearch.trim()) {
+      setSearchQuery(heroSearch.trim());
+      setActiveTab('skills');
+    }
+  };
+
+  const handleCategoryClick = (catKey) => {
+    setSelectedCategory(catKey);
+    setActiveTab('skills');
+  };
 
   return (
     <div>
@@ -22,6 +36,21 @@ export const HomePage = ({ setActiveTab }) => {
           <p className="hero-sub">
             تواصل مع أشخاص يريدون تعلّم مهاراتك وعلّمهم بالمقابل مهارات تريد أنت اكتسابها — بدون مال، فقط تبادل حقيقي للمثاقفة والمعرفة.
           </p>
+
+          {/* Quick Search Bar */}
+          <form className="hero-search-box" onSubmit={handleHeroSearch}>
+            <Search className="search-icon" size={20} />
+            <input
+              type="text"
+              placeholder="ابحث عن مهارة (مثال: React، تصميم، إسبانية...)"
+              value={heroSearch}
+              onChange={(e) => setHeroSearch(e.target.value)}
+            />
+            <button type="submit" className="btn-search">
+              بحث 🔍
+            </button>
+          </form>
+
           <div className="hero-actions">
             <button
               onClick={() => setActiveTab('register')}
@@ -33,7 +62,7 @@ export const HomePage = ({ setActiveTab }) => {
               onClick={() => setActiveTab('skills')}
               className="btn-hero btn-hero-ghost"
             >
-              تصفح المهارات 🔍
+              تصفح جميع المهارات
             </button>
           </div>
         </div>
@@ -80,30 +109,29 @@ export const HomePage = ({ setActiveTab }) => {
         <h2 className="section-title">اكتشف مجالات التبادل</h2>
         <div className="divider"></div>
         <div className="cats-grid">
-          <div className="cat-card" onClick={() => setActiveTab('skills')}>
+          <div className="cat-card" onClick={() => handleCategoryClick('tech')}>
             <div className="cat-icon">💻</div>
             <div className="cat-name">تقنية وبرمجة</div>
           </div>
-          <div className="cat-card" onClick={() => setActiveTab('skills')}>
+          <div className="cat-card" onClick={() => handleCategoryClick('design')}>
             <div className="cat-icon">🎨</div>
             <div className="cat-name">تصميم وفنون</div>
           </div>
-          <div className="cat-card" onClick={() => setActiveTab('skills')}>
+          <div className="cat-card" onClick={() => handleCategoryClick('photo')}>
             <div className="cat-icon">📸</div>
             <div className="cat-name">تصوير وإنتاج</div>
           </div>
-          <div className="cat-card" onClick={() => setActiveTab('skills')}>
+          <div className="cat-card" onClick={() => handleCategoryClick('business')}>
             <div className="cat-icon">📊</div>
             <div className="cat-name">أعمال وتسويق</div>
           </div>
-          <div className="cat-card" onClick={() => setActiveTab('skills')}>
+          <div className="cat-card" onClick={() => handleCategoryClick('languages')}>
             <div className="cat-icon">🌍</div>
             <div className="cat-name">لغات وترجمة</div>
           </div>
-          <div className="cat-card" onClick={() => setActiveTab('skills')}>
+          <div className="cat-card" onClick={() => handleCategoryClick('music')}>
             <div className="cat-icon">🎵</div>
             <div className="cat-name">موسيقى وصوت</div>
-
           </div>
         </div>
       </section>
@@ -147,6 +175,56 @@ export const HomePage = ({ setActiveTab }) => {
               </div>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="section testimonials-section">
+        <p className="section-label">تجارب أعضائنا</p>
+        <h2 className="section-title">قصص نجاح في تبادل المهارات</h2>
+        <div className="divider"></div>
+        <div className="testimonials-grid">
+          <div className="testimonial-card">
+            <div className="t-user-info">
+              <div className="t-avatar-box">أ ر</div>
+              <div>
+                <h4>أحمد رضا</h4>
+                <span>مطور ويب</span>
+              </div>
+            </div>
+            <p className="t-comment">
+              "تبادلت خبرتي في برمجة React مقابل تعلم أساسيات تصميم UI/UX مع إحدى العضوات. تجربة ممتازة واختصرت علي شهوراً من التعلم الذاتي!"
+            </p>
+            <div className="t-stars">⭐⭐⭐⭐⭐</div>
+          </div>
+
+          <div className="testimonial-card">
+            <div className="t-user-info">
+              <div className="t-avatar-box" style={{ background: 'var(--teal)', color: '#000' }}>س م</div>
+              <div>
+                <h4>سارة منصور</h4>
+                <span>مصممة جرافيك</span>
+              </div>
+            </div>
+            <p className="t-comment">
+              "منصة مهارة هي المكان الأفضل لتبادل الخبرات بدون أي تكاليف مالية. تعلمت اللغة الإسبانية وعلمت تصميم الشعارات."
+            </p>
+            <div className="t-stars">⭐⭐⭐⭐⭐</div>
+          </div>
+
+          <div className="testimonial-card">
+            <div className="t-user-info">
+              <div className="t-avatar-box" style={{ background: '#9c27b0', color: '#fff' }}>م ع</div>
+              <div>
+                <h4>محمد العتيبي</h4>
+                <span>محلل بيانات</span>
+              </div>
+            </div>
+            <p className="t-comment">
+              "سهولة التواصل والتعامل بين الأعضاء تجعل عملية التبادل ممتعة ومفيدة جداً. أنصح كل من يود تطوير مهاراته بالانضمام."
+            </p>
+            <div className="t-stars">⭐⭐⭐⭐⭐</div>
+          </div>
         </div>
       </section>
 

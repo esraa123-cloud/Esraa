@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
-import { LogOut } from 'lucide-react';
+import { LogOut, Menu, X } from 'lucide-react';
 
 export const Navbar = ({ activeTab, setActiveTab }) => {
   const { currentUser, isLoggedIn, logout } = useAuth();
@@ -18,8 +18,17 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
 
   return (
     <nav>
-      <div className="logo" onClick={() => handleNavClick('home')}>
-        مهارة<span>.</span>
+      <div className="nav-brand-group">
+        <button
+          className="mobile-menu-btn"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          aria-label="قائمة الملاحة"
+        >
+          {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+        </button>
+        <div className="logo" onClick={() => handleNavClick('home')}>
+          مهارة<span>.</span>
+        </div>
       </div>
 
       <ul className={`nav-links ${mobileMenuOpen ? 'mobile-active' : ''}`}>
@@ -66,11 +75,10 @@ export const Navbar = ({ activeTab, setActiveTab }) => {
               title="الملف الشخصي"
             >
               <div className="user-avatar-sm">{currentUser.avatar || 'ع'}</div>
-              <span style={{ fontSize: '0.9rem', fontWeight: '700' }}>{currentUser.name}</span>
+              <span className="nav-username">{currentUser.name}</span>
             </div>
             <button
-              className="btn-outline"
-              style={{ padding: '0.45rem 0.8rem', fontSize: '0.82rem' }}
+              className="btn-outline logout-btn"
               onClick={handleLogout}
               title="تسجيل الخروج"
             >
