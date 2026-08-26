@@ -6,7 +6,7 @@ const SwapContext = createContext();
 
 export const SwapProvider = ({ children }) => {
   const { currentUser, isLoggedIn } = useAuth();
-  
+
   const [allSkills, setAllSkills] = useState(() => {
     try {
       const saved = localStorage.getItem('mahara_skills');
@@ -42,11 +42,11 @@ export const SwapProvider = ({ children }) => {
 
   // Filter skills based on search query and category
   const skills = allSkills.filter(skill => {
-    const matchesSearch = !searchQuery.trim() || 
+    const matchesSearch = !searchQuery.trim() ||
       skill.title.toLowerCase().includes(searchQuery.toLowerCase().trim()) ||
       (skill.wants && skill.wants.toLowerCase().includes(searchQuery.toLowerCase().trim())) ||
       (skill.owner && skill.owner.toLowerCase().includes(searchQuery.toLowerCase().trim()));
-    
+
     const matchesCategory = !selectedCategory || selectedCategory === 'all' || skill.category === selectedCategory;
 
     return matchesSearch && matchesCategory;
@@ -61,7 +61,7 @@ export const SwapProvider = ({ children }) => {
   }, []);
 
   const addSkill = async (skillData) => {
-    const ownerName = currentUser ? currentUser.name : 'أحمد رضا';
+    const ownerName = currentUser ? currentUser.name : 'نور صلاح';
     const newSkill = {
       id: 'skill_' + Date.now(),
       _id: 'skill_' + Date.now(),
@@ -69,7 +69,7 @@ export const SwapProvider = ({ children }) => {
       category: skillData.category || 'tech',
       icon: skillData.icon || '💡',
       owner: ownerName,
-      location: currentUser?.location || 'القاهرة',
+      location: currentUser?.location || 'مصر',
       wants: skillData.wants || 'تبادل خبرات',
       rating: 5.0,
       bg: 'linear-gradient(135deg, #1a2540, #0f1a30)'
@@ -80,7 +80,7 @@ export const SwapProvider = ({ children }) => {
   };
 
   const proposeSwap = async (targetSkill, offeredSkillTitle) => {
-    const proposerName = currentUser ? currentUser.name : 'أحمد رضا';
+    const proposerName = currentUser ? currentUser.name : 'نور صلاح';
     const receiverName = targetSkill.owner || 'إسراء صلاح';
 
     const newSwap = {

@@ -103,7 +103,7 @@ export const HomePage = ({ setActiveTab }) => {
           <div className="cat-card" onClick={() => setActiveTab('skills')}>
             <div className="cat-icon">🎵</div>
             <div className="cat-name">موسيقى وصوت</div>
-          
+
           </div>
         </div>
       </section>
@@ -155,7 +155,7 @@ export const HomePage = ({ setActiveTab }) => {
         <h2>جاهز تبدأ رحلتك؟</h2>
         <p>انضم لآلاف المحترفين الذين يتبادلون المعرفة يومياً</p>
         <button onClick={() => setActiveTab('register')} className="btn-cta">
-          أنشئ حسابك مجاناً
+          أنشئ حسابك
         </button>
       </section>
 
