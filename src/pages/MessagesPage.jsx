@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useChat } from '../context/ChatContext';
 import { useAuth } from '../context/AuthContext';
 import { Send, MessageSquare, Circle, ArrowRight } from 'lucide-react';
@@ -9,13 +9,24 @@ export const MessagesPage = () => {
   const [inputText, setInputText] = useState('');
   const [sending, setSending] = useState(false);
   const [mobileShowChat, setMobileShowChat] = useState(false);
+  const chatBodyRef = useRef(null);
+
+  // Auto-scroll chat window to bottom on new messages
+  useEffect(() => {
+    if (chatBodyRef.current) {
+      chatBodyRef.current.scrollTo({
+        top: chatBodyRef.current.scrollHeight,
+        behavior: 'smooth'
+      });
+    }
+  }, [activeChat?.messages]);
 
   const handleSend = async (e) => {
     e.preventDefault();
-    if (!inputText.trim() || !activeChatId || sending) return;
+    if (!inputText || !inputText.trim() || !activeChatId || sending) return;
 
     const textToSend = inputText.trim();
-    setInputText('');
+    setInputText(''); // Clear input immediately
     setSending(true);
 
     await sendMessage(activeChatId, textToSend);
@@ -69,7 +80,7 @@ export const MessagesPage = () => {
                       className={`chat-item ${isActive ? 'active' : ''}`}
                       onClick={() => handleSelectChat(chatId)}
                     >
-                      <div className="avatar">{chat.peerAvatar || (chat.peerName ? chat.peerName.charAt(0) : 'ع')}</div>
+                      <div className="avatar">{chat.peerAvatar || (chat.peerName ? chat.peerName.charAt(0) : 'إ')}</div>
                       <div className="chat-info">
                         <div className="name">
                           <span>{chat.peerName}</span>
@@ -99,7 +110,7 @@ export const MessagesPage = () => {
                 >
                   <ArrowRight size={20} />
                 </button>
-                <div className="avatar">{activeChat.peerAvatar || (activeChat.peerName ? activeChat.peerName.charAt(0) : 'ع')}</div>
+                <div className="avatar">{activeChat.peerAvatar || (activeChat.peerName ? activeChat.peerName.charAt(0) : 'إ')}</div>
                 <div>
                   <div style={{ fontWeight: '700', fontSize: '1rem' }}>{activeChat.peerName}</div>
                   <div style={{ fontSize: '0.8rem', color: 'var(--teal)', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
@@ -109,7 +120,7 @@ export const MessagesPage = () => {
                 </div>
               </div>
 
-              <div className="chat-body">
+              <div className="chat-body" ref={chatBodyRef}>
                 {(activeChat.messages || []).map((msg, index) => (
                   <div
                     key={msg.id || msg._id || index}
@@ -128,9 +139,8 @@ export const MessagesPage = () => {
                   placeholder="اكتب رسالتك هنا..."
                   value={inputText}
                   onChange={(e) => setInputText(e.target.value)}
-                  disabled={sending}
                 />
-                <button type="submit" className="btn-send" disabled={sending || !inputText.trim()}>
+                <button type="submit" className="btn-send" disabled={!inputText.trim()}>
                   <Send size={18} />
                   <span>إرسال</span>
                 </button>

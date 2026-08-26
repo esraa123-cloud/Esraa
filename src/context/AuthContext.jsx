@@ -4,13 +4,27 @@ import { INITIAL_USERS } from '../data/initialData';
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+  const [registeredUsers, setRegisteredUsers] = useState(() => {
+    try {
+      const saved = localStorage.getItem('mahara_registered_users_v2');
+      if (saved) return JSON.parse(saved);
+    } catch (e) {
+      console.error('Error loading registered users:', e);
+    }
+    return INITIAL_USERS;
+  });
+
+  useEffect(() => {
+    localStorage.setItem('mahara_registered_users_v2', JSON.stringify(registeredUsers));
+  }, [registeredUsers]);
+
   const formatUser = (user) => {
     if (!user) return null;
     return {
       ...user,
       id: user._id || user.id || 'u1',
       name: user.name || `${user.fname || ''} ${user.lname || ''}`.trim() || 'إسراء صلاح',
-      avatar: user.avatar || 'إ ص',
+      avatar: user.avatar || (user.name ? user.name.charAt(0) : 'إ'),
       skillsTeach: Array.isArray(user.skillsTeach) ? user.skillsTeach : [],
       skillsLearn: Array.isArray(user.skillsLearn) ? user.skillsLearn : [],
       rating: user.rating ?? 5.0,
@@ -53,19 +67,22 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     setLoading(true);
     try {
-      const found = INITIAL_USERS.find(u => u.email === email) || {
-        id: 'u_' + Date.now(),
-        name: email.split('@')[0],
-        fname: email.split('@')[0],
-        lname: '',
-        email,
-        skillsTeach: ['تطوير React', 'JavaScript'],
-        skillsLearn: ['تصميم UI/UX'],
-        rating: 5.0,
-        swapsCompleted: 0
-      };
+      const cleanEmail = (email || '').trim().toLowerCase();
+      // Search in registered users
+      const found = registeredUsers.find(u =>
+        (u.email && u.email.toLowerCase().trim() === cleanEmail) ||
+        (u.username && u.username.toLowerCase().trim() === cleanEmail)
+      );
+
+      if (!found) {
+        return {
+          success: false,
+          message: 'عفواً، البريد الإلكتروني غير مسجل بعد. يرجى إنشاء حساب جديد أولاً.'
+        };
+      }
+
       const formatted = persistUserData(found);
-      return { success: true, message: 'تم تسجيل الدخول بنجاح', user: formatted };
+      return { success: true, message: 'تم تسجيل الدخول بنجاح! مرحباً بك 🌸', user: formatted };
     } finally {
       setLoading(false);
     }
@@ -74,21 +91,38 @@ export const AuthProvider = ({ children }) => {
   const register = async (userData) => {
     setLoading(true);
     try {
+      const cleanEmail = (userData.email || '').trim().toLowerCase();
+
+      // Check if email already registered
+      const existing = registeredUsers.find(u => u.email && u.email.toLowerCase().trim() === cleanEmail);
+      if (existing) {
+        return {
+          success: false,
+          message: 'البريد الإلكتروني مسجل بالفعل! يمكنك تسجيل الدخول مباشرة.'
+        };
+      }
+
+      const fullName = `${userData.fname || ''} ${userData.lname || ''}`.trim() || userData.username || 'مستخدم جديد';
+      const avatarLetters = fullName.split(' ').map(n => n[0]).join('') || 'إ ص';
+
       const newUser = {
         id: 'u_' + Date.now(),
-        name: `${userData.fname || ''} ${userData.lname || ''}`.trim() || userData.username || 'مستخدم جديد',
+        name: fullName,
         fname: userData.fname || '',
         lname: userData.lname || '',
         email: userData.email,
         username: userData.username,
         country: userData.country || 'مصر',
+        avatar: avatarLetters,
         skillsTeach: userData.skillsTeach || [],
         skillsLearn: userData.skillsLearn || [],
         rating: 5.0,
         swapsCompleted: 0
       };
+
+      setRegisteredUsers(prev => [newUser, ...prev]);
       const formatted = persistUserData(newUser);
-      return { success: true, message: 'تم إنشاء الحساب بنجاح', user: formatted };
+      return { success: true, message: 'تم إنشاء الحساب بنجاح! مرحباً بك 🌸', user: formatted };
     } finally {
       setLoading(false);
     }
@@ -102,6 +136,8 @@ export const AuthProvider = ({ children }) => {
     if (!currentUser) return { success: false, message: 'غير مسجل الدخول' };
     const updated = formatUser({ ...currentUser, ...updatedFields });
     persistUserData(updated);
+
+    setRegisteredUsers(prev => prev.map(u => (u.id === updated.id ? updated : u)));
     return { success: true, message: 'تم تحديث البيانات بنجاح', user: updated };
   };
 

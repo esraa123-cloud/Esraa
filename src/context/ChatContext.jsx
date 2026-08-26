@@ -5,11 +5,11 @@ import { useAuth } from './AuthContext';
 const ChatContext = createContext();
 
 export const ChatProvider = ({ children }) => {
-  const { isLoggedIn } = useAuth();
-  
+  const { isLoggedIn, currentUser } = useAuth();
+
   const [chats, setChats] = useState(() => {
     try {
-      const saved = localStorage.getItem('mahara_chats');
+      const saved = localStorage.getItem('mahara_chats_v4');
       if (saved) return JSON.parse(saved);
     } catch (e) {
       console.error('Error loading saved chats:', e);
@@ -24,7 +24,7 @@ export const ChatProvider = ({ children }) => {
   const [loadingChats, setLoadingChats] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem('mahara_chats', JSON.stringify(chats));
+    localStorage.setItem('mahara_chats_v4', JSON.stringify(chats));
   }, [chats]);
 
   const fetchChats = useCallback(async () => {
@@ -34,24 +34,58 @@ export const ChatProvider = ({ children }) => {
   const activeChat = chats.find(c => c.id === activeChatId || c._id === activeChatId) || chats[0] || null;
 
   const sendMessage = async (chatId, text) => {
-    if (!text.trim() || !chatId) return { success: false, message: 'رسالة فارغة' };
+    if (!text || !text.trim() || !chatId) return { success: false, message: 'رسالة فارغة' };
+
+    const textToSend = text.trim();
+    const nowTime = new Date().toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' });
 
     const newMsg = {
-      id: 'm_' + Date.now(),
+      id: 'm_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
       sender: 'me',
-      text: text.trim(),
-      time: new Date().toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' })
+      text: textToSend,
+      time: nowTime
     };
 
-    setChats(prev => prev.map(c => {
-      if (c.id === chatId || c._id === chatId) {
-        return {
-          ...c,
-          messages: [...(c.messages || []), newMsg]
-        };
-      }
-      return c;
-    }));
+    setChats(prevChats =>
+      prevChats.map(c => {
+        if (c.id === chatId || c._id === chatId) {
+          return {
+            ...c,
+            active: true,
+            messages: [...(c.messages || []), newMsg]
+          };
+        }
+        return c;
+      })
+    );
+
+    // Simulate friendly auto-reply after 1.5s to make chat feel live & dynamic
+    setTimeout(() => {
+      const autoReplies = [
+        'أهلاً بك! وصلت رسالتك ويسعدني جداً التبادل معك 🌸',
+        'مرحباً! أنسق الموعد معكِ حالاً للبدء في جلسة التبادل ✨',
+        'شكراً لرسالتك! متوفرة اليوم للتبادل المعرفي 💻'
+      ];
+      const randomReply = autoReplies[Math.floor(Math.random() * autoReplies.length)];
+      const replyMsg = {
+        id: 'm_reply_' + Date.now(),
+        sender: 'peer',
+        text: randomReply,
+        time: new Date().toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' })
+      };
+
+      setChats(prevChats =>
+        prevChats.map(c => {
+          if (c.id === chatId || c._id === chatId) {
+            return {
+              ...c,
+              messages: [...(c.messages || []), replyMsg]
+            };
+          }
+          return c;
+        })
+      );
+    }, 1500);
 
     return { success: true };
   };
@@ -69,7 +103,7 @@ export const ChatProvider = ({ children }) => {
       _id: 'c_' + Date.now(),
       peerId: peerId || 'u_' + Date.now(),
       peerName: userName || 'مستخدم',
-      peerAvatar: userAvatar || (userName ? userName.charAt(0) : 'ع'),
+      peerAvatar: userAvatar || (userName ? userName.charAt(0) : 'إ'),
       messages: []
     };
 
