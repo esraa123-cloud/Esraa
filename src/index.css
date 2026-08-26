@@ -1789,6 +1789,43 @@ input::placeholder {
   }
 }
 
+/* Mobile Back Button for Chat */
+.mobile-back-btn {
+  display: none;
+  background: transparent;
+  border: none;
+  color: var(--text);
+  cursor: pointer;
+  padding: 0.3rem;
+  margin-left: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .mobile-back-btn {
+    display: flex;
+    align-items: center;
+  }
+
+  .chat-container.mobile-show-sidebar .chat-main {
+    display: none !important;
+  }
+
+  .chat-container.mobile-show-sidebar .chat-sidebar {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .chat-container.mobile-show-main .chat-sidebar {
+    display: none !important;
+  }
+
+  .chat-container.mobile-show-main .chat-main {
+    width: 100% !important;
+    display: flex !important;
+  }
+}
+
+
 
 
 

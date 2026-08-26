@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { useChat } from '../context/ChatContext';
 import { useAuth } from '../context/AuthContext';
-import { Send, MessageSquare, Circle } from 'lucide-react';
+import { Send, MessageSquare, Circle, ArrowRight } from 'lucide-react';
 
 export const MessagesPage = () => {
   const { chats, activeChatId, setActiveChatId, activeChat, sendMessage, loadingChats } = useChat();
   const { isLoggedIn } = useAuth();
   const [inputText, setInputText] = useState('');
   const [sending, setSending] = useState(false);
+  const [mobileShowChat, setMobileShowChat] = useState(false);
 
   const handleSend = async (e) => {
     e.preventDefault();
@@ -21,6 +22,11 @@ export const MessagesPage = () => {
     setSending(false);
   };
 
+  const handleSelectChat = (chatId) => {
+    setActiveChatId(chatId);
+    setMobileShowChat(true);
+  };
+
   if (!isLoggedIn) {
     return (
       <div style={{ paddingTop: '120px', textAlign: 'center', color: 'var(--muted)', minHeight: '60vh' }}>
@@ -32,7 +38,7 @@ export const MessagesPage = () => {
 
   return (
     <div style={{ paddingTop: '64px', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      <div className="chat-container">
+      <div className={`chat-container ${mobileShowChat ? 'mobile-show-main' : 'mobile-show-sidebar'}`}>
         {/* Sidebar */}
         <div className="chat-sidebar">
           <div className="sidebar-header">
@@ -61,7 +67,7 @@ export const MessagesPage = () => {
                     <div
                       key={chatId}
                       className={`chat-item ${isActive ? 'active' : ''}`}
-                      onClick={() => setActiveChatId(chatId)}
+                      onClick={() => handleSelectChat(chatId)}
                     >
                       <div className="avatar">{chat.peerAvatar || (chat.peerName ? chat.peerName.charAt(0) : 'ع')}</div>
                       <div className="chat-info">
@@ -86,6 +92,13 @@ export const MessagesPage = () => {
           {activeChat ? (
             <>
               <div className="chat-main-header">
+                <button
+                  className="mobile-back-btn"
+                  onClick={() => setMobileShowChat(false)}
+                  title="العودة للقائمة"
+                >
+                  <ArrowRight size={20} />
+                </button>
                 <div className="avatar">{activeChat.peerAvatar || (activeChat.peerName ? activeChat.peerName.charAt(0) : 'ع')}</div>
                 <div>
                   <div style={{ fontWeight: '700', fontSize: '1rem' }}>{activeChat.peerName}</div>
