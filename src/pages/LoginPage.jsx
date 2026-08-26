@@ -127,10 +127,12 @@ export const LoginPage = ({ setActiveTab }) => {
 
           <div className="social-login">
             <button type="button" className="btn-social">
-              🌐 جوجل
+              <span className="social-glass-icon">🌐</span>
+              <span>جوجل</span>
             </button>
             <button type="button" className="btn-social">
-              📘 فيسبوك
+              <span className="social-glass-icon">📘</span>
+              <span>فيسبوك</span>
             </button>
           </div>
 
