@@ -9,7 +9,7 @@ export const ChatProvider = ({ children }) => {
 
   const [chats, setChats] = useState(() => {
     try {
-      const saved = localStorage.getItem('mahara_chats_v4');
+      const saved = localStorage.getItem('mahara_chats_v6');
       if (saved) return JSON.parse(saved);
     } catch (e) {
       console.error('Error loading saved chats:', e);
@@ -24,7 +24,7 @@ export const ChatProvider = ({ children }) => {
   const [loadingChats, setLoadingChats] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem('mahara_chats_v4', JSON.stringify(chats));
+    localStorage.setItem('mahara_chats_v6', JSON.stringify(chats));
   }, [chats]);
 
   const fetchChats = useCallback(async () => {

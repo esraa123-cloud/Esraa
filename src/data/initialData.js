@@ -14,11 +14,11 @@ export const INITIAL_SKILLS = [
 export const INITIAL_USERS = [
   {
     id: 'u1',
-    name: 'إسراء صلاح',
-    username: 'esraa_react',
+    name: 'نور أحمد',
+    username: 'nour_react',
     title: 'مطورة ويب متخصصة React',
-    location: 'مصر - قنا',
-    avatar: 'إ ص',
+    location: 'مصر - القاهرة',
+    avatar: 'ن أ',
     bio: 'شغوفة بتطوير واجهات المستخدم التفاعلية وصناعة تجارب رقمية ممتازة.',
     skillsTeach: ['تطوير React', 'JavaScript', 'HTML/CSS'],
     skillsLearn: ['تصميم UI/UX', 'Figma', 'إدارة المشاريع'],
@@ -27,11 +27,11 @@ export const INITIAL_USERS = [
   },
   {
     id: 'u2',
-    name: 'نور أحمد',
-    username: 'nour_nova',
-    title: 'مهندسة برمجيات وواجهات',
-    location: 'مصر - القاهرة',
-    avatar: 'ن أ',
+    name: 'إسراء صلاح',
+    username: 'esraa_nova',
+    title: 'مهندسة برمجيات وواجهات (قنا)',
+    location: 'مصر - قنا',
+    avatar: 'إ ص',
     bio: 'مهندسة برمجيات وشغوفة بالبرمجة وتبادل الخبرات المعرفية في مصر.',
     skillsTeach: ['تطوير الويب', 'تصميم واجهات', 'حل المشكلات'],
     skillsLearn: ['ذكاء اصطناعي', 'تطوير تطبيقات الجوال'],
@@ -57,12 +57,12 @@ export const INITIAL_CHATS = [
   {
     id: 'c1',
     peerId: 'u2',
-    peerName: 'نور أحمد',
-    peerAvatar: 'ن أ',
+    peerName: 'إسراء صلاح',
+    peerAvatar: 'إ ص',
     active: true,
     messages: [
       { id: 'm1', sender: 'peer', text: 'أهلاً بك! شاهدت مهاراتك في تطوير الويب، يسعدني التبادل معك.', time: '10:15 م' },
-      { id: 'm2', sender: 'me', text: 'أهلاً يا نور، يسعدني جداً ذلك! ما هي المهارات التي تودين تعلمها؟', time: '10:20 م' },
+      { id: 'm2', sender: 'me', text: 'أهلاً يا إسراء، يسعدني جداً ذلك! ما هي المهارات التي تودين تعلمها؟', time: '10:20 م' },
       { id: 'm3', sender: 'peer', text: 'أريد تعميق معرفتي بـ React hooks وState Management، مقابل تعليمك أساسيات تصميم UI.', time: '10:25 م' }
     ]
   },
@@ -82,7 +82,7 @@ export const INITIAL_SWAPS = [
   {
     id: 's1',
     proposer: 'إسراء صلاح',
-    receiver: 'نور أحمد',
+    receiver: 'سارة منصور',
     offeredSkill: 'تطوير React',
     requestedSkill: 'تصميم UI/UX',
     status: 'accepted',
