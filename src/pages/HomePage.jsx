@@ -186,10 +186,10 @@ export const HomePage = ({ setActiveTab }) => {
         <div className="testimonials-grid">
           <div className="testimonial-card">
             <div className="t-user-info">
-              <div className="t-avatar-box">أ ر</div>
+              <div className="t-avatar-box">ن ص</div>
               <div>
-                <h4>أحمد رضا</h4>
-                <span>مطور ويب</span>
+                <h4>نور صلاح</h4>
+                <span>مطورة ويب (القاهرة)</span>
               </div>
             </div>
             <p className="t-comment">
@@ -203,25 +203,25 @@ export const HomePage = ({ setActiveTab }) => {
               <div className="t-avatar-box" style={{ background: 'var(--teal)', color: '#000' }}>س م</div>
               <div>
                 <h4>سارة منصور</h4>
-                <span>مصممة جرافيك</span>
+                <span>مصممة جرافيك (الإسكندرية)</span>
               </div>
             </div>
             <p className="t-comment">
-              "منصة مهارة هي المكان الأفضل لتبادل الخبرات بدون أي تكاليف مالية. تعلمت اللغة الإسبانية وعلمت تصميم الشعارات."
+              "منصة مهارة هي المكان الأفضل لتبادل الخبرات بدون أي تكاليف مالية. تعلمت تسويق المحتوى وعلمت تصميم الشعارات."
             </p>
             <div className="t-stars">⭐⭐⭐⭐⭐</div>
           </div>
 
           <div className="testimonial-card">
             <div className="t-user-info">
-              <div className="t-avatar-box" style={{ background: '#9c27b0', color: '#fff' }}>م ع</div>
+              <div className="t-avatar-box" style={{ background: '#9c27b0', color: '#fff' }}>ن أ</div>
               <div>
-                <h4>محمد العتيبي</h4>
-                <span>محلل بيانات</span>
+                <h4>نورهان أحمد</h4>
+                <span>مترجمة ومدرسة إسبانية (الجيزة)</span>
               </div>
             </div>
             <p className="t-comment">
-              "سهولة التواصل والتعامل بين الأعضاء تجعل عملية التبادل ممتعة ومفيدة جداً. أنصح كل من يود تطوير مهاراته بالانضمام."
+              "سهولة التواصل والتعامل بين العضوات تجعل عملية التبادل ممتعة ومفيدة جداً. أنصح كل من تود تطوير مهاراتها بالانضمام."
             </p>
             <div className="t-stars">⭐⭐⭐⭐⭐</div>
           </div>
