@@ -527,30 +527,53 @@ h1 .highlight::after {
 }
 
 .step-card {
-  background: var(--card);
-  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.035) !important;
+  backdrop-filter: blur(20px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(190%) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.12) !important;
   border-radius: 18px;
   padding: 2rem 1.8rem;
-  transition: transform 0.25s, border-color 0.25s;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.2) !important;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
   position: relative;
   overflow: hidden;
 }
 .step-card:hover {
-  transform: translateY(-6px);
-  border-color: rgba(245, 166, 35, 0.35);
+  transform: translateY(-8px) scale(1.02) !important;
+  border-color: var(--accent) !important;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5), 0 0 30px rgba(245, 166, 35, 0.3) !important;
+  background: rgba(255, 255, 255, 0.075) !important;
 }
 
 .step-num {
   font-family: 'Tajawal', sans-serif;
   font-size: 3rem;
   font-weight: 900;
-  color: rgba(245, 166, 35, 0.18);
+  color: rgba(245, 166, 35, 0.25);
   line-height: 1;
   margin-bottom: 0.8rem;
 }
 .step-icon {
-  font-size: 2rem;
+  font-size: 2.2rem;
+  width: 58px;
+  height: 58px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1.5px solid rgba(245, 166, 35, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.25), 0 8px 20px rgba(0, 0, 0, 0.3);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   margin-bottom: 1rem;
+}
+.step-card:hover .step-icon {
+  transform: scale(1.15) rotate(8deg);
+  background: rgba(245, 166, 35, 0.2);
+  border-color: var(--accent);
+  box-shadow: 0 0 30px rgba(245, 166, 35, 0.45);
 }
 .step-title {
   font-size: 1.12rem;
@@ -634,18 +657,22 @@ h1 .highlight::after {
 }
 
 .skill-card {
-  background: var(--card);
-  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.035) !important;
+  backdrop-filter: blur(20px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(190%) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.12) !important;
   border-radius: 18px;
   overflow: hidden;
-  transition: all 0.25s;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.2) !important;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
   display: flex;
   flex-direction: column;
 }
 .skill-card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(29, 233, 182, 0.3);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+  transform: translateY(-8px) scale(1.02) !important;
+  border-color: rgba(29, 233, 182, 0.5) !important;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5), 0 0 30px rgba(29, 233, 182, 0.3) !important;
+  background: rgba(255, 255, 255, 0.075) !important;
 }
 
 .skill-card-top {
