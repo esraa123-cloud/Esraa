@@ -1968,28 +1968,29 @@ input::placeholder {
 .reveal {
   opacity: 0;
   transition-property: opacity, transform;
-  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  transition-duration: 0.9s;
+  transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
   will-change: opacity, transform;
 }
 
 .reveal-fade-up {
-  transform: translateY(28px);
+  transform: translateY(32px);
 }
 
 .reveal-fade-down {
-  transform: translateY(-28px);
+  transform: translateY(-32px);
 }
 
 .reveal-fade-right {
-  transform: translateX(28px);
+  transform: translateX(32px);
 }
 
 .reveal-fade-left {
-  transform: translateX(-28px);
+  transform: translateX(-32px);
 }
 
 .reveal-scale-in {
-  transform: scale(0.92);
+  transform: scale(0.93);
 }
 
 .reveal.is-visible {
