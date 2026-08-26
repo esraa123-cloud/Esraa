@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSwap } from '../context/SwapContext';
 import { useChat } from '../context/ChatContext';
 import { useAuth } from '../context/AuthContext';
+import { Reveal } from '../components/common/Reveal';
 import { MessageSquare } from 'lucide-react';
 
 export const SwapsPage = ({ setActiveTab }) => {
@@ -50,8 +51,10 @@ export const SwapsPage = ({ setActiveTab }) => {
   if (!isLoggedIn) {
     return (
       <div style={{ paddingTop: '120px', textAlign: 'center', color: 'var(--muted)', minHeight: '60vh' }}>
-        <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🤝</div>
-        <h2>يرجى تسجيل الدخول لمشاهدة وإدارة طلبات التبادل</h2>
+        <Reveal variant="fade-up">
+          <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🤝</div>
+          <h2>يرجى تسجيل الدخول لمشاهدة وإدارة طلبات التبادل</h2>
+        </Reveal>
       </div>
     );
   }
@@ -59,15 +62,17 @@ export const SwapsPage = ({ setActiveTab }) => {
   return (
     <div style={{ paddingTop: '100px', minHeight: '100vh' }}>
       <section className="section" style={{ padding: '2rem 4rem' }}>
-        <div style={{ marginBottom: '2rem' }}>
-          <span className="section-label">إدارة التبادلات</span>
-          <h1 className="section-title" style={{ textAlign: 'right', fontSize: '2.4rem' }}>
-            طلبات التبادل الخاصة بك 🤝
-          </h1>
-          <p style={{ color: 'var(--muted)', fontSize: '0.95rem' }}>
-            تابع الطلبات الواردة والصادرة، وقبول مقترحات التبادل الجديدة
-          </p>
-        </div>
+        <Reveal variant="fade-up" delay={0}>
+          <div style={{ marginBottom: '2rem' }}>
+            <span className="section-label">إدارة التبادلات</span>
+            <h1 className="section-title" style={{ textAlign: 'right', fontSize: '2.4rem' }}>
+              طلبات التبادل الخاصة بك 🤝
+            </h1>
+            <p style={{ color: 'var(--muted)', fontSize: '0.95rem' }}>
+              تابع الطلبات الواردة والصادرة، وقبول مقترحات التبادل الجديدة
+            </p>
+          </div>
+        </Reveal>
 
         {msg.text && (
           <div
@@ -87,20 +92,22 @@ export const SwapsPage = ({ setActiveTab }) => {
         )}
 
         {/* Filter Tabs */}
-        <div style={{ display: 'flex', gap: '0.6rem', marginBottom: '2rem', flexWrap: 'wrap' }}>
-          <button className={`skill-tag ${filter === 'all' ? 'selected' : ''}`} onClick={() => setFilter('all')}>
-            الكل ({swaps.length})
-          </button>
-          <button className={`skill-tag ${filter === 'pending' ? 'selected' : ''}`} onClick={() => setFilter('pending')}>
-            قيد الانتظار ({swaps.filter(s => s.status === 'pending').length})
-          </button>
-          <button className={`skill-tag ${filter === 'accepted' ? 'selected' : ''}`} onClick={() => setFilter('accepted')}>
-            المقبولة ({swaps.filter(s => s.status === 'accepted').length})
-          </button>
-          <button className={`skill-tag ${filter === 'completed' ? 'selected' : ''}`} onClick={() => setFilter('completed')}>
-            المكتملة ({swaps.filter(s => s.status === 'completed').length})
-          </button>
-        </div>
+        <Reveal variant="fade-up" delay={0.1}>
+          <div style={{ display: 'flex', gap: '0.6rem', marginBottom: '2rem', flexWrap: 'wrap' }}>
+            <button className={`skill-tag ${filter === 'all' ? 'selected' : ''}`} onClick={() => setFilter('all')}>
+              الكل ({swaps.length})
+            </button>
+            <button className={`skill-tag ${filter === 'pending' ? 'selected' : ''}`} onClick={() => setFilter('pending')}>
+              قيد الانتظار ({swaps.filter(s => s.status === 'pending').length})
+            </button>
+            <button className={`skill-tag ${filter === 'accepted' ? 'selected' : ''}`} onClick={() => setFilter('accepted')}>
+              المقبولة ({swaps.filter(s => s.status === 'accepted').length})
+            </button>
+            <button className={`skill-tag ${filter === 'completed' ? 'selected' : ''}`} onClick={() => setFilter('completed')}>
+              المكتملة ({swaps.filter(s => s.status === 'completed').length})
+            </button>
+          </div>
+        </Reveal>
 
         {/* Swaps List */}
         {loadingSwaps ? (
@@ -115,96 +122,97 @@ export const SwapsPage = ({ setActiveTab }) => {
           </div>
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem', maxWidth: '900px' }}>
-            {filteredSwaps.map(swap => {
+            {filteredSwaps.map((swap, idx) => {
               const swapId = swap.id || swap._id;
               const isLoadingThis = actionLoadingId === swapId;
               const isIncoming = swap.receiver === 'أنت' || swap.isReceiver;
 
               return (
-                <div
-                  key={swapId}
-                  style={{
-                    background: 'var(--card)',
-                    border: '1px solid var(--border)',
-                    borderRadius: '16px',
-                    padding: '1.5rem',
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    flexWrap: 'wrap',
-                    gap: '1rem'
-                  }}
-                >
-                  <div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', marginBottom: '0.6rem', flexWrap: 'wrap' }}>
-                      <h3 style={{ fontSize: '1.15rem', fontWeight: '800' }}>
-                        {swap.proposer} ↔ {swap.receiver}
-                      </h3>
-                      {getStatusBadge(swap.status)}
-                      <span style={{ fontSize: '0.75rem', padding: '0.15rem 0.5rem', borderRadius: '6px', background: isIncoming ? 'rgba(106,90,249,0.2)' : 'rgba(245,166,35,0.2)', color: isIncoming ? '#a18cd1' : 'var(--accent)', fontWeight: '700' }}>
-                        {isIncoming ? '📥 طلب وارد' : '📤 طلب صادر'}
-                      </span>
+                <Reveal key={swapId} variant="fade-up" delay={0.12 + (idx % 5) * 0.08}>
+                  <div
+                    style={{
+                      background: 'var(--card)',
+                      border: '1px solid var(--border)',
+                      borderRadius: '16px',
+                      padding: '1.5rem',
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      flexWrap: 'wrap',
+                      gap: '1rem'
+                    }}
+                  >
+                    <div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', marginBottom: '0.6rem', flexWrap: 'wrap' }}>
+                        <h3 style={{ fontSize: '1.15rem', fontWeight: '800' }}>
+                          {swap.proposer} ↔ {swap.receiver}
+                        </h3>
+                        {getStatusBadge(swap.status)}
+                        <span style={{ fontSize: '0.75rem', padding: '0.15rem 0.5rem', borderRadius: '6px', background: isIncoming ? 'rgba(106,90,249,0.2)' : 'rgba(245,166,35,0.2)', color: isIncoming ? '#a18cd1' : 'var(--accent)', fontWeight: '700' }}>
+                          {isIncoming ? '📥 طلب وارد' : '📤 طلب صادر'}
+                        </span>
+                      </div>
+
+                      <div style={{ color: 'var(--text)', fontSize: '0.95rem', marginBottom: '0.4rem' }}>
+                        تقدم مهارة: <strong style={{ color: 'var(--accent)' }}>{swap.offeredSkill}</strong> مقابل تعلم: <strong style={{ color: 'var(--teal)' }}>{swap.requestedSkill}</strong>
+                      </div>
+
+                      <div style={{ color: 'var(--muted)', fontSize: '0.8rem' }}>
+                        تاريخ الطلب: {swap.date}
+                      </div>
                     </div>
 
-                    <div style={{ color: 'var(--text)', fontSize: '0.95rem', marginBottom: '0.4rem' }}>
-                      تقدم مهارة: <strong style={{ color: 'var(--accent)' }}>{swap.offeredSkill}</strong> مقابل تعلم: <strong style={{ color: 'var(--teal)' }}>{swap.requestedSkill}</strong>
-                    </div>
+                    <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap', alignItems: 'center' }}>
+                      {swap.status === 'pending' && (
+                        isIncoming ? (
+                          <>
+                            <button
+                              className="btn-solid"
+                              style={{ padding: '0.4rem 0.9rem', fontSize: '0.85rem' }}
+                              onClick={() => handleStatusChange(swapId, 'accepted')}
+                              disabled={isLoadingThis}
+                            >
+                              {isLoadingThis ? '...' : 'قبول الطلب ✓'}
+                            </button>
+                            <button
+                              className="btn-outline"
+                              style={{ padding: '0.4rem 0.9rem', fontSize: '0.85rem', borderColor: 'var(--error)', color: 'var(--error)' }}
+                              onClick={() => handleStatusChange(swapId, 'rejected')}
+                              disabled={isLoadingThis}
+                            >
+                              {isLoadingThis ? '...' : 'رفض'}
+                            </button>
+                          </>
+                        ) : (
+                          <span style={{ fontSize: '0.85rem', color: 'var(--muted)', display: 'flex', alignItems: 'center', gap: '0.4rem', background: 'rgba(255,255,255,0.05)', padding: '0.4rem 0.8rem', borderRadius: '8px' }}>
+                            ⏳ في انتظار موافقة {swap.receiver}
+                          </span>
+                        )
+                      )}
 
-                    <div style={{ color: 'var(--muted)', fontSize: '0.8rem' }}>
-                      تاريخ الطلب: {swap.date}
-                    </div>
-                  </div>
-
-                  <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap', alignItems: 'center' }}>
-                    {swap.status === 'pending' && (
-                      isIncoming ? (
+                      {swap.status === 'accepted' && (
                         <>
                           <button
-                            className="btn-solid"
+                            className="btn-outline"
                             style={{ padding: '0.4rem 0.9rem', fontSize: '0.85rem' }}
-                            onClick={() => handleStatusChange(swapId, 'accepted')}
-                            disabled={isLoadingThis}
+                            onClick={() => handleChatWithUser(swap.receiver === 'أنت' ? swap.proposer : swap.receiver)}
                           >
-                            {isLoadingThis ? '...' : 'قبول الطلب ✓'}
+                            <MessageSquare size={14} />
+                            <span>محادثة</span>
                           </button>
                           <button
-                            className="btn-outline"
-                            style={{ padding: '0.4rem 0.9rem', fontSize: '0.85rem', borderColor: 'var(--error)', color: 'var(--error)' }}
-                            onClick={() => handleStatusChange(swapId, 'rejected')}
+                            className="btn-solid"
+                            style={{ padding: '0.4rem 0.9rem', fontSize: '0.85rem', background: 'var(--teal)' }}
+                            onClick={() => handleStatusChange(swapId, 'completed')}
                             disabled={isLoadingThis}
                           >
-                            {isLoadingThis ? '...' : 'رفض'}
+                            {isLoadingThis ? '...' : 'إكمال التبادل 🎉'}
                           </button>
                         </>
-                      ) : (
-                        <span style={{ fontSize: '0.85rem', color: 'var(--muted)', display: 'flex', alignItems: 'center', gap: '0.4rem', background: 'rgba(255,255,255,0.05)', padding: '0.4rem 0.8rem', borderRadius: '8px' }}>
-                          ⏳ في انتظار موافقة {swap.receiver}
-                        </span>
-                      )
-                    )}
-
-                    {swap.status === 'accepted' && (
-                      <>
-                        <button
-                          className="btn-outline"
-                          style={{ padding: '0.4rem 0.9rem', fontSize: '0.85rem' }}
-                          onClick={() => handleChatWithUser(swap.receiver === 'أنت' ? swap.proposer : swap.receiver)}
-                        >
-                          <MessageSquare size={14} />
-                          <span>محادثة</span>
-                        </button>
-                        <button
-                          className="btn-solid"
-                          style={{ padding: '0.4rem 0.9rem', fontSize: '0.85rem', background: 'var(--teal)' }}
-                          onClick={() => handleStatusChange(swapId, 'completed')}
-                          disabled={isLoadingThis}
-                        >
-                          {isLoadingThis ? '...' : 'إكمال التبادل 🎉'}
-                        </button>
-                      </>
-                    )}
+                      )}
+                    </div>
                   </div>
-                </div>
+                </Reveal>
               );
             })}
           </div>

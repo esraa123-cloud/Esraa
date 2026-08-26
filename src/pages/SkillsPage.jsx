@@ -3,6 +3,7 @@ import { useSwap } from '../context/SwapContext';
 import { useChat } from '../context/ChatContext';
 import { useAuth } from '../context/AuthContext';
 import { SwapModal } from '../components/skills/SwapModal';
+import { Reveal } from '../components/common/Reveal';
 import { Plus, MessageSquare } from 'lucide-react';
 
 export const SkillsPage = ({ setActiveTab }) => {
@@ -85,47 +86,51 @@ export const SkillsPage = ({ setActiveTab }) => {
   return (
     <div style={{ paddingTop: '100px', minHeight: '100vh' }}>
       <section className="section" style={{ padding: '2rem 4rem' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginBottom: '2rem' }}>
-          <div>
-            <span className="section-label">سوق التبادل المعرفي</span>
-            <h1 className="section-title" style={{ textAlign: 'right', fontSize: '2.4rem' }}>
-              المهارات المتاحة للتبادل 🤝
-            </h1>
-            <p style={{ color: 'var(--muted)', fontSize: '0.95rem' }}>
-              استكشف المهارات التي يقدمها أعضاء المجتمع، واقترح تبادلاً معرفياً فورياً
-            </p>
-          </div>
+        <Reveal variant="fade-up" delay={0}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginBottom: '2rem' }}>
+            <div>
+              <span className="section-label">سوق التبادل المعرفي</span>
+              <h1 className="section-title" style={{ textAlign: 'right', fontSize: '2.4rem' }}>
+                المهارات المتاحة للتبادل 🤝
+              </h1>
+              <p style={{ color: 'var(--muted)', fontSize: '0.95rem' }}>
+                استكشف المهارات التي يقدمها أعضاء المجتمع، واقترح تبادلاً معرفياً فورياً
+              </p>
+            </div>
 
-          <button className="btn-solid" onClick={() => setShowAddModal(true)}>
-            <Plus size={18} />
-            <span>إضافة مهارة جديدة</span>
-          </button>
-        </div>
+            <button className="btn-solid" onClick={() => setShowAddModal(true)}>
+              <Plus size={18} />
+              <span>إضافة مهارة جديدة</span>
+            </button>
+          </div>
+        </Reveal>
 
         {/* Search & Filter Bar */}
-        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginBottom: '2rem' }}>
-          <div className="input-wrap" style={{ flex: '1', minWidth: '280px' }}>
-            <span className="icon">🔍</span>
-            <input
-              type="text"
-              placeholder="ابحث باسم المهارة، الشخص، أو المهارة المطلوبة..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-          </div>
+        <Reveal variant="fade-up" delay={0.1}>
+          <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginBottom: '2rem' }}>
+            <div className="input-wrap" style={{ flex: '1', minWidth: '280px' }}>
+              <span className="icon">🔍</span>
+              <input
+                type="text"
+                placeholder="ابحث باسم المهارة، الشخص، أو المهارة المطلوبة..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
 
-          <div style={{ display: 'flex', gap: '0.5rem', overflowX: 'auto', paddingBottom: '0.3rem' }}>
-            {categories.map(cat => (
-              <button
-                key={cat.id}
-                className={`skill-tag ${selectedCategory === cat.id ? 'selected' : ''}`}
-                onClick={() => setSelectedCategory(cat.id)}
-              >
-                {cat.name}
-              </button>
-            ))}
+            <div style={{ display: 'flex', gap: '0.5rem', overflowX: 'auto', paddingBottom: '0.3rem' }}>
+              {categories.map(cat => (
+                <button
+                  key={cat.id}
+                  className={`skill-tag ${selectedCategory === cat.id ? 'selected' : ''}`}
+                  onClick={() => setSelectedCategory(cat.id)}
+                >
+                  {cat.name}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
+        </Reveal>
 
         {/* Skills Grid */}
         {loadingSkills ? (
@@ -140,44 +145,46 @@ export const SkillsPage = ({ setActiveTab }) => {
           </div>
         ) : (
           <div className="skills-grid">
-            {skills.map(skill => (
-              <div key={skill.id || skill._id} className="skill-card">
-                <div className="skill-card-top" style={{ background: skill.bg }}>
-                  <span>{skill.icon || '💡'}</span>
-                  <div className="tag-exchange">تبادل</div>
-                </div>
-                <div className="skill-card-body">
-                  <div className="skill-title">{skill.title}</div>
-                  <div className="skill-owner">
-                    <span>👤</span>
-                    <span>{skill.owner} {skill.location ? `· ${skill.location}` : ''}</span>
+            {skills.map((skill, idx) => (
+              <Reveal key={skill.id || skill._id} variant="fade-up" delay={0.12 + (idx % 6) * 0.08}>
+                <div className="skill-card">
+                  <div className="skill-card-top" style={{ background: skill.bg }}>
+                    <span>{skill.icon || '💡'}</span>
+                    <div className="tag-exchange">تبادل</div>
                   </div>
-
-                  <div className="skill-footer">
-                    <div className="skill-wants">
-                      يريد: <strong>{skill.wants}</strong>
+                  <div className="skill-card-body">
+                    <div className="skill-title">{skill.title}</div>
+                    <div className="skill-owner">
+                      <span>👤</span>
+                      <span>{skill.owner} {skill.location ? `· ${skill.location}` : ''}</span>
                     </div>
 
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                      <button
-                        className="btn-outline"
-                        style={{ padding: '0.35rem 0.6rem', fontSize: '0.8rem' }}
-                        onClick={() => handleDirectChat(skill.owner, skill.ownerId)}
-                        title="محادثة مباشرة"
-                      >
-                        <MessageSquare size={14} />
-                      </button>
-                      <button
-                        className="btn-solid"
-                        style={{ padding: '0.35rem 0.8rem', fontSize: '0.8rem' }}
-                        onClick={() => handleSwapClick(skill)}
-                      >
-                        طلب تبادل
-                      </button>
+                    <div className="skill-footer">
+                      <div className="skill-wants">
+                        يريد: <strong>{skill.wants}</strong>
+                      </div>
+
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <button
+                          className="btn-outline"
+                          style={{ padding: '0.35rem 0.6rem', fontSize: '0.8rem' }}
+                          onClick={() => handleDirectChat(skill.owner, skill.ownerId)}
+                          title="محادثة مباشرة"
+                        >
+                          <MessageSquare size={14} />
+                        </button>
+                        <button
+                          className="btn-solid"
+                          style={{ padding: '0.35rem 0.8rem', fontSize: '0.8rem' }}
+                          onClick={() => handleSwapClick(skill)}
+                        >
+                          طلب تبادل
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              </Reveal>
             ))}
           </div>
         )}
