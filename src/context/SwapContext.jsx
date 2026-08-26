@@ -9,7 +9,7 @@ export const SwapProvider = ({ children }) => {
 
   const [allSkills, setAllSkills] = useState(() => {
     try {
-      const saved = localStorage.getItem('mahara_skills');
+      const saved = localStorage.getItem('mahara_skills_v3');
       if (saved) return JSON.parse(saved);
     } catch (e) {
       console.error('Error loading saved skills:', e);
@@ -19,7 +19,7 @@ export const SwapProvider = ({ children }) => {
 
   const [swaps, setSwaps] = useState(() => {
     try {
-      const saved = localStorage.getItem('mahara_swaps');
+      const saved = localStorage.getItem('mahara_swaps_v3');
       if (saved) return JSON.parse(saved);
     } catch (e) {
       console.error('Error loading saved swaps:', e);
@@ -33,12 +33,13 @@ export const SwapProvider = ({ children }) => {
   const [loadingSwaps, setLoadingSwaps] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem('mahara_skills', JSON.stringify(allSkills));
+    localStorage.setItem('mahara_skills_v3', JSON.stringify(allSkills));
   }, [allSkills]);
 
   useEffect(() => {
-    localStorage.setItem('mahara_swaps', JSON.stringify(swaps));
+    localStorage.setItem('mahara_swaps_v3', JSON.stringify(swaps));
   }, [swaps]);
+
 
   // Filter skills based on search query and category
   const skills = allSkills.filter(skill => {
