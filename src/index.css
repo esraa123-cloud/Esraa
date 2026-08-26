@@ -1961,6 +1961,70 @@ input::placeholder {
 }
 
 
+/* ==========================================================================
+   Scroll Reveal Animations & Performance Specs
+   ========================================================================== */
+
+.reveal {
+  opacity: 0;
+  transition-property: opacity, transform;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-fade-up {
+  transform: translateY(28px);
+}
+
+.reveal-fade-down {
+  transform: translateY(-28px);
+}
+
+.reveal-fade-right {
+  transform: translateX(28px);
+}
+
+.reveal-fade-left {
+  transform: translateX(-28px);
+}
+
+.reveal-scale-in {
+  transform: scale(0.92);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translate(0, 0) scale(1);
+}
+
+/* Reduced Motion Accessibility Support */
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* Mobile Responsive Optimization for Animations */
+@media (max-width: 768px) {
+  .reveal-fade-up,
+  .reveal-fade-down {
+    transform: translateY(14px);
+  }
+  
+  .reveal-fade-right,
+  .reveal-fade-left {
+    transform: translateX(14px);
+  }
+
+  .reveal {
+    transition-duration: 0.45s !important;
+  }
+}
+
+
+
 
 
 
