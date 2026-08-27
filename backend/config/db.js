@@ -2,19 +2,32 @@ const mongoose = require('mongoose');
 
 /**
  * Connects to MongoDB using MONGO_URI environment variable.
- * If standard local/remote MongoDB is unreachable (e.g. ECONNREFUSED),
- * it seamlessly falls back to MongoMemoryServer (v6.0.14 light binary) for fast execution.
+ * Reuses existing connection in serverless / hot environments.
+ * In production, connects strictly to MONGO_URI and never uses MongoMemoryServer.
  */
 const connectDB = async () => {
+  if (mongoose.connection.readyState >= 1) {
+    return mongoose.connection;
+  }
+
   const uri = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/skill_swap_platform';
+  const isProd = process.env.NODE_ENV === 'production';
 
   mongoose.set('strictQuery', true);
 
   try {
-    const conn = await mongoose.connect(uri, { serverSelectionTimeoutMS: 2000 });
+    const conn = await mongoose.connect(uri, {
+      serverSelectionTimeoutMS: 5000
+    });
     console.log(`MongoDB connected: ${conn.connection.host}/${conn.connection.name}`);
     await autoSeedIfNeeded();
+    return conn;
   } catch (err) {
+    if (isProd) {
+      console.error(`Production MongoDB connection error: ${err.message}`);
+      throw err;
+    }
+
     console.log(`Local MongoDB server not responding on ${uri} (${err.message}). Starting MongoMemoryServer...`);
     try {
       const { MongoMemoryServer } = require('mongodb-memory-server');
@@ -27,6 +40,7 @@ const connectDB = async () => {
       const conn = await mongoose.connect(memUri);
       console.log(`Connected to MongoMemoryServer: ${conn.connection.host}/${conn.connection.name}`);
       await autoSeedIfNeeded();
+      return conn;
     } catch (memErr) {
       console.error(`Failed to start MongoMemoryServer: ${memErr.message}`);
       process.exit(1);

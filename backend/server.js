@@ -20,7 +20,7 @@ const app = express();
 // --- Middleware ---
 app.use(
   cors({
-    origin: true,
+    origin: process.env.CLIENT_URL || true,
     credentials: true
   })
 );
@@ -30,6 +30,16 @@ app.use(express.json());
 if (nodeEnv !== 'test') {
   app.use(morgan('dev'));
 }
+
+// Ensure DB connection for every request (Serverless & Direct execution)
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    next(err);
+  }
+});
 
 // --- Health Check ---
 app.get('/api/health', (req, res) => {
@@ -51,21 +61,22 @@ app.use('/api/chats', chatRoutes);
 app.use(notFound);
 app.use(errorHandler);
 
-// --- Database & Server ---
+// --- Database & Local Server ---
 const PORT = process.env.PORT || 5000;
 
-connectDB()
-  .then(() => {
-    console.log('Database connected successfully');
-
-    app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
+if (require.main === module) {
+  connectDB()
+    .then(() => {
+      console.log('Database connected successfully');
+      app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+      });
+    })
+    .catch((error) => {
+      console.error('Database connection failed:', error.message);
+      process.exit(1);
     });
-  })
-  .catch((error) => {
-    console.error('Database connection failed:', error.message);
-    process.exit(1);
-  });
+}
 
 // --- Export App ---
 module.exports = app;

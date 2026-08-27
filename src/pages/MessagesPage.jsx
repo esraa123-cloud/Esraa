@@ -55,39 +55,20 @@ export const MessagesPage = () => {
 
   if (!isLoggedIn) {
     return (
-      <div
-        style={{
-          paddingTop: '120px',
-          textAlign: 'center',
-          color: 'var(--muted)',
-          minHeight: '60vh',
-        }}
-      >
-        <div
-          style={{
-            fontSize: '3rem',
-            marginBottom: '1rem',
-          }}
-        >
-          💬
+      <div className="messages-page messages-page--locked">
+        <div className="chat-empty-state chat-empty-state--page">
+          <div className="chat-empty-icon">
+            <MessageSquare size={28} />
+          </div>
+          <h2>يرجى تسجيل الدخول للوصول إلى المحادثات</h2>
+          <p>سجّل دخولك لبدء المراسلة المباشرة مع الأعضاء.</p>
         </div>
-
-        <h2>
-          يرجى تسجيل الدخول للوصول إلى المحادثات والرسائل المباشرة
-        </h2>
       </div>
     );
   }
 
   return (
-    <div
-      style={{
-        paddingTop: '64px',
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-      }}
-    >
+    <div className="messages-page">
       <div
         className={`chat-container ${
           mobileShowChat
@@ -98,34 +79,28 @@ export const MessagesPage = () => {
         {/* Sidebar */}
         <div className="chat-sidebar">
           <div className="sidebar-header">
-            <span>المحادثات المباشرة</span>
-            <MessageSquare size={20} />
+            <span>المحادثات</span>
+            <MessageSquare size={18} />
           </div>
 
           {loadingChats ? (
-            <div
-              style={{
-                padding: '2rem 1rem',
-                textAlign: 'center',
-                color: 'var(--muted)',
-                fontSize: '0.85rem',
-              }}
-            >
-              جاري تحميل المحادثات... ⏳
+            <div className="chat-empty-state chat-empty-state--sidebar">
+              <div className="chat-loading-dots" aria-hidden="true">
+                <span />
+                <span />
+                <span />
+              </div>
+              <p>جاري تحميل المحادثات...</p>
             </div>
           ) : (
             <div className="chat-list">
               {chats.length === 0 ? (
-                <div
-                  style={{
-                    padding: '2rem 1rem',
-                    textAlign: 'center',
-                    color: 'var(--muted)',
-                    fontSize: '0.85rem',
-                  }}
-                >
-                  لا توجد محادثات نشطة بعد. يمكنك بدء محادثة مع أي عضو
-                  من صفحة المهارات.
+                <div className="chat-empty-state chat-empty-state--sidebar">
+                  <div className="chat-empty-icon">
+                    <MessageSquare size={22} />
+                  </div>
+                  <p>لا توجد محادثات بعد</p>
+                  <span>ابدأ محادثة مع أي عضو من صفحة المهارات.</span>
                 </div>
               ) : (
                 chats.map((chat) => {
@@ -146,7 +121,7 @@ export const MessagesPage = () => {
                       }`}
                       onClick={() => handleSelectChat(chatId)}
                     >
-                      <div className="avatar">
+                      <div className="chat-avatar">
                         {chat.peerAvatar ||
                           (chat.peerName
                             ? chat.peerName.charAt(0)
@@ -155,7 +130,9 @@ export const MessagesPage = () => {
 
                       <div className="chat-info">
                         <div className="name">
-                          <span>{chat.peerName}</span>
+                          <span className="chat-peer-name">
+                            {chat.peerName}
+                          </span>
 
                           <span className="time">
                             {lastMsg?.time || ''}
@@ -192,16 +169,19 @@ export const MessagesPage = () => {
                   <ArrowRight size={20} />
                 </button>
 
-                <div className="avatar">
+                <div className="chat-avatar">
                   {activeChat.peerAvatar ||
                     (activeChat.peerName
                       ? activeChat.peerName.charAt(0)
                       : 'إ')}
                 </div>
 
-                <div className="user-details">
+                <div className="chat-user-details">
                   <h3>{activeChat.peerName}</h3>
-                  <span>متصل الآن 🟢</span>
+                  <span className="chat-status">
+                    <span className="chat-status-dot" />
+                    متصل الآن
+                  </span>
                 </div>
               </div>
 
@@ -210,30 +190,26 @@ export const MessagesPage = () => {
                 activeChat.messages.length > 0 ? (
                   activeChat.messages.map((msg, idx) => (
                     <div
-                      key={idx}
+                      key={msg.id || idx}
                       className={`msg-bubble ${
                         msg.sender === 'me'
                           ? 'sent'
                           : 'received'
                       }`}
                     >
-                      {msg.text}
-
+                      <p className="msg-text">{msg.text}</p>
                       <span className="msg-time">
                         {msg.time}
                       </span>
                     </div>
                   ))
                 ) : (
-                  <div
-                    style={{
-                      textAlign: 'center',
-                      margin: 'auto',
-                      color: 'var(--muted)',
-                      fontSize: '0.9rem',
-                    }}
-                  >
-                    لا توجد رسائل سابقة. ابدأ المحادثة الآن! 👋
+                  <div className="chat-empty-state chat-empty-state--body">
+                    <div className="chat-empty-icon">
+                      <MessageSquare size={22} />
+                    </div>
+                    <p>لا توجد رسائل بعد</p>
+                    <span>اكتب رسالة للبدء في المحادثة.</span>
                   </div>
                 )}
               </div>
@@ -244,6 +220,7 @@ export const MessagesPage = () => {
               >
                 <input
                   type="text"
+                  className="chat-input"
                   placeholder="اكتب رسالتك هنا..."
                   value={inputText}
                   onChange={(e) =>
@@ -258,29 +235,19 @@ export const MessagesPage = () => {
                   disabled={
                     sending || !inputText.trim()
                   }
+                  aria-label="إرسال"
                 >
                   <Send size={18} />
                 </button>
               </form>
             </>
           ) : (
-            <div
-              style={{
-                margin: 'auto',
-                textAlign: 'center',
-                color: 'var(--muted)',
-              }}
-            >
-              <div
-                style={{
-                  fontSize: '3rem',
-                  marginBottom: '1rem',
-                }}
-              >
-                💬
+            <div className="chat-empty-state chat-empty-state--main">
+              <div className="chat-empty-icon">
+                <MessageSquare size={28} />
               </div>
-
               <h3>اختر محادثة لبدء المراسلة</h3>
+              <p>حدد محادثة من القائمة أو ابدأ واحدة جديدة من صفحة المهارات.</p>
             </div>
           )}
         </div>
